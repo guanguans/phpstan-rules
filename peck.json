@@ -1,0 +1,9 @@
+{
+    "preset": "base",
+    "ignore": {
+        "words": [
+            "utils"
+        ],
+        "paths": []
+    }
+}

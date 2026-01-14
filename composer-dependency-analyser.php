@@ -1,0 +1,66 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * Copyright (c) 2026 guanguans<ityaozm@gmail.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ *
+ * @see https://github.com/guanguans/phpstan-rules
+ */
+
+use ShipMonk\ComposerDependencyAnalyser\Config\Configuration;
+use ShipMonk\ComposerDependencyAnalyser\Config\ErrorType;
+
+return (new Configuration)
+    ->addPathsToScan(
+        [
+            // __DIR__.'/src/',
+        ],
+        false
+    )
+    ->addPathsToExclude([
+        __DIR__.'/src/Support/ComposerScripts.php',
+        __DIR__.'/tests/',
+    ])
+    ->ignoreUnknownClasses([
+        // \SensitiveParameter::class,
+    ])
+    /** @see \ShipMonk\ComposerDependencyAnalyser\Analyser::CORE_EXTENSIONS */
+    ->ignoreErrorsOnExtensions(
+        [
+            // 'ext-ctype',
+        ],
+        [ErrorType::SHADOW_DEPENDENCY],
+    )
+    ->ignoreErrorsOnPackages(
+        [
+            'illuminate/support',
+            'phpstan/phpstan',
+        ],
+        [ErrorType::UNUSED_DEPENDENCY]
+    )
+    ->ignoreErrorsOnPackages(
+        [
+            // 'guanguans/phpstan-rules',
+            // 'phpstan/phpstan',
+        ],
+        [ErrorType::DEV_DEPENDENCY_IN_PROD]
+    )
+    ->ignoreErrorsOnPackages(
+        [
+            /**
+             * @see https://github.com/phpstan/phpstan-src/tree/2.1.x/build/
+             * @see vendor/phpstan/phpstan/phpstan.phar/vendor/symfony/
+             */
+            'illuminate/collections',
+            // 'rector/rector',
+            // 'symfony/polyfill-php80',
+            // 'symfony/polyfill-php81',
+            // 'webmozart/assert',
+            'nikic/php-parser',
+        ],
+        [ErrorType::SHADOW_DEPENDENCY]
+    );
