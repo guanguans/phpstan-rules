@@ -200,6 +200,7 @@ return RectorConfig::configure()
     ])
     ->withSkip([
         NewExceptionToNewAnonymousExtendsExceptionImplementsRector::class => [
+            __DIR__.'/src/Support/helpers.php',
             __DIR__.'/tests/Support/HelpersTest.php',
         ],
         SortAssociativeArrayByKeyRector::class => [
