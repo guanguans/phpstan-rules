@@ -53,6 +53,11 @@ parameters:
         allRules: true
         booleansInConditions: false
         disallowedShortTernary: false
+    ergebnis:
+        noParameterWithNullableTypeDeclaration:
+            enabled: false
+        noParameterWithNullDefaultValue:
+            enabled: false
     cognitive_complexity:
         class: 42
         function: 8
@@ -122,7 +127,7 @@ parameters:
 #        - identifier: trait.unused
 #        - identifier: typePerfect.noMixedMethodCaller
 
-        - identifier: argument.type
+#        - identifier: argument.type
 #        - identifier: cast.int
 #        - identifier: cast.string
 #        - identifier: encapsedStringPart.nonString
@@ -130,7 +135,7 @@ parameters:
         - identifier: return.type
         - identifier: symplify.explicitInterfaceSuffixName
 #        - identifier: symplify.forbiddenArrayMethodCall
-#        - identifier: symplify.forbiddenNode
+        - identifier: symplify.forbiddenNode
 #        - identifier: symplify.forbiddenStaticClassConstFetch
 #        - identifier: symplify.noArrayMapWithArrayCallable
 #        - message: '#^Unused Guanguans\\PHPStanRules\\Rector\\.*\\.*\:\:__construct$#'
@@ -143,6 +148,9 @@ parameters:
             path: src/Support/helpers.php
         -
             identifier: symplify.forbiddenFuncCall
+            path: src/Support/helpers.php
+        -
+            identifier: shipmonk.unusedParameter
             path: src/Support/helpers.php
 
         - identifier: typeCoverage.paramTypeCoverage

@@ -29,8 +29,10 @@ if (!\function_exists('Guanguans\PHPStanRules\Support\classes')) {
      * @see \get_declared_classes()
      * @see \get_declared_interfaces()
      * @see \get_declared_traits()
-     * @see \DG\BypassFinals::enable()
      * @see \Composer\Util\ErrorHandler
+     * @see \Composer\Util\Silencer::call()
+     * @see \DG\BypassFinals::enable()
+     * @see \Illuminate\Foundation\Bootstrap\HandleExceptions::bootstrap()
      * @see \Monolog\ErrorHandler
      * @see \PhpCsFixer\ExecutorWithoutErrorHandler
      * @see \Phrity\Util\ErrorHandler
@@ -41,6 +43,8 @@ if (!\function_exists('Guanguans\PHPStanRules\Support\classes')) {
      *
      * @param null|(callable(class-string<TObject>, string): bool) $filter
      *
+     * @throws \ErrorException
+     *
      * @return \Illuminate\Support\Collection<class-string<TObject>, \ReflectionClass<TObject>|\Throwable>
      *
      * @noinspection PhpUndefinedNamespaceInspection
@@ -49,7 +53,7 @@ if (!\function_exists('Guanguans\PHPStanRules\Support\classes')) {
     {
         $filter ??= static fn (string $class, string $file): bool => true;
 
-        /** @var null|\Illuminate\Support\Collection $classes */
+        /** @var null|\Illuminate\Support\Collection<string, class-string> $classes */
         static $classes;
         $classes ??= collect(spl_autoload_functions())->flatMap(
             static fn (callable $loader): array => \is_array($loader) && $loader[0] instanceof ClassLoader
@@ -57,13 +61,51 @@ if (!\function_exists('Guanguans\PHPStanRules\Support\classes')) {
                 : []
         );
 
+        /** @var null|array{class: class-string<TObject>, line: int} $context */
+        static $context = null;
+        static $registered = false;
+
+        if (!$registered) {
+            register_shutdown_function(
+                static function (string $func) use (&$context): void {
+                    // @codeCoverageIgnoreStart
+                    if (
+                        null === $context
+                        || null === ($error = error_get_last())
+                        || !\in_array($error['type'], [\E_COMPILE_ERROR, \E_CORE_ERROR, \E_ERROR, \E_PARSE], true)
+                    ) {
+                        return;
+                    }
+
+                    // trigger_error('Error message...', \E_USER_ERROR);
+                    throw new \ErrorException(
+                        "Fatal Error detected during reflection of class [{$context['class']}]".\PHP_EOL.
+                        "You may need to filter out the class using the callback parameter of the function [$func()]",
+                        0,
+                        $error['type'],
+                        __FILE__,
+                        $context['line'],
+                        new \ErrorException($error['message'], 0, $error['type'], $error['file'], $error['line'])
+                    );
+                    // @codeCoverageIgnoreEnd
+                },
+                __FUNCTION__
+            );
+
+            $registered = true;
+        }
+
         return $classes
             ->filter(static fn (string $file, string $class): bool => $filter($class, $file))
-            ->mapWithKeys(static function (string $file, string $class): array {
+            ->mapWithKeys(static function (string $file, string $class) use (&$context): array {
                 try {
+                    $context = ['class' => $class, 'line' => __LINE__ + 2];
+
                     return [$class => new \ReflectionClass($class)];
                 } catch (\Throwable $throwable) {
                     return [$class => $throwable];
+                } finally {
+                    $context = null;
                 }
             });
     }

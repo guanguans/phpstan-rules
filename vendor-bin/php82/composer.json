@@ -4,9 +4,14 @@
         "ergebnis/composer-normalize": "^2.48",
         "guanguans/monorepo-builder-worker": "^3.0",
         "illuminate/support": "^12.46",
+        "jbelien/phpstan-sarif-formatter": "^1.2",
         "mrpunyapal/rector-pest": "^0.1",
+        "nicksdot/phpstan-phpstorm-error-identifiers": "^0.2.0",
         "peckphp/peck": "^0.2",
-        "phpro/grumphp-shim": "^2.18"
+        "phpro/grumphp-shim": "^2.18",
+        "phpstan/phpstan": "^2.1",
+        "roave/no-floaters": "^1.13",
+        "sidz/phpstan-rules": "^0.5.2"
     },
     "config": {
         "allow-plugins": {
