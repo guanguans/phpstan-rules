@@ -63,7 +63,7 @@ parameters:
             enabled: false
     guanguans:
         exceptionMustImplementNativeThrowable:
-            implement: Guanguans\PHPStanRules\Contract\ThrowableContract
+            nativeThrowable: Guanguans\PHPStanRules\Contract\ThrowableContract
             enabled: false
     cognitive_complexity:
         class: 42

@@ -5,5 +5,5 @@ parameters:
     guanguans:
         allRules: false
         exceptionMustImplementNativeThrowable:
-            implement: Guanguans\PHPStanRules\Contract\ThrowableContract
+            nativeThrowable: Guanguans\PHPStanRules\Contract\ThrowableContract
             enabled: true

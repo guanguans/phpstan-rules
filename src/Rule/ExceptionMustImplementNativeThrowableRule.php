@@ -32,14 +32,14 @@ final class ExceptionMustImplementNativeThrowableRule implements Rule
 {
     /** @api */
     public const ERROR_MESSAGE = 'The exception [%s] must implement the native throwable [%s].';
-    private string $implement;
+    private string $nativeThrowable;
 
     /**
-     * @param class-string<\Throwable> $implement
+     * @param class-string<\Throwable> $nativeThrowable
      */
-    public function __construct(string $implement)
+    public function __construct(string $nativeThrowable)
     {
-        $this->implement = $implement;
+        $this->nativeThrowable = $nativeThrowable;
     }
 
     public function getNodeType(): string
@@ -58,7 +58,7 @@ final class ExceptionMustImplementNativeThrowableRule implements Rule
             /** 暂不处理匿名类 `new class() extends Exception {}` 的情况. */
             !$node->class instanceof Name
             || !is_subclass_of($class = $node->class->toString(), \Throwable::class)
-            || is_subclass_of($class, $this->implement)
+            || is_subclass_of($class, $this->nativeThrowable)
         ) {
             return [];
         }
@@ -72,6 +72,6 @@ final class ExceptionMustImplementNativeThrowableRule implements Rule
 
     private function createErrorMessage(string $class): string
     {
-        return \sprintf(self::ERROR_MESSAGE, $class, $this->implement);
+        return \sprintf(self::ERROR_MESSAGE, $class, $this->nativeThrowable);
     }
 }

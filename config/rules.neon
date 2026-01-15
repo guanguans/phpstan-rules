@@ -6,14 +6,14 @@ parameters:
 	guanguans:
 		allRules: true
 		exceptionMustImplementNativeThrowable:
-			implement: \Throwable
+			nativeThrowable: \Throwable
 			enabled: %guanguans.allRules%
 
 parametersSchema:
 	guanguans: structure([
 		allRules: bool()
 		exceptionMustImplementNativeThrowable: structure([
-			implement: string()
+			nativeThrowable: string()
 			enabled: bool(),
 		])
 	])
@@ -22,4 +22,4 @@ services:
 	-
 		class: Guanguans\PHPStanRules\Rule\ExceptionMustImplementNativeThrowableRule
 		arguments:
-			implement: %guanguans.exceptionMustImplementNativeThrowable.implement%
+			nativeThrowable: %guanguans.exceptionMustImplementNativeThrowable.nativeThrowable%
