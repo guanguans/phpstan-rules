@@ -318,6 +318,7 @@
         ],
         "php-cs-fixer:fix": "@php-cs-fixer fix --show-progress=dots --diff",
         "php-cs-fixer:fix-dry-run": "@php-cs-fixer:fix --dry-run",
+        "php-cs-fixer:fix-dry-run-format-annotate-pull-request": "@php vendor/bin/php-cs-fixer --ansi -vv 'fix' '--show-progress=dots' '--diff' '--dry-run' --format=checkstyle | vendor/bin/cs2pr --notices-as-warnings --colorize",
         "php-cs-fixer:list-files": "@php-cs-fixer list-files",
         "php-cs-fixer:list-sets": "@php-cs-fixer list-sets --ansi -vv",
         "php-lint": [
@@ -338,10 +339,11 @@
         ],
         "phpstan-rules:list-files": "Guanguans\\PHPStanRules\\Support\\ComposerScripts::listFiles",
         "phpstan:analyse": "@phpstan analyse",
-        "phpstan:analyse-error-format-checkstyle": "@php vendor/bin/phpstan --ansi -vv analyse --error-format=checkstyle | vendor/bin/cs2pr",
+        "phpstan:analyse-error-format-annotate-pull-request": "@php vendor/bin/phpstan --ansi -vv 'analyse' --error-format=checkstyle | vendor/bin/cs2pr --notices-as-warnings --colorize",
+        "phpstan:analyse-error-format-github": "@phpstan:analyse --error-format=github",
         "phpstan:analyse-error-format-sarif": [
             "[ -d .build/phpstan/ ] || mkdir -p .build/phpstan/",
-            "@php vendor/bin/phpstan --ansi -vv analyse --error-format=sarif > .build/phpstan/results.sarif"
+            "@php vendor/bin/phpstan --ansi -vv 'analyse' --error-format=sarif > .build/phpstan/results.sarif"
         ],
         "phpstan:analyse-generate-baseline": "@phpstan:analyse --generate-baseline --allow-empty-baseline",
         "phpstan:analyse-split-baseline": [
@@ -356,6 +358,10 @@
             "@php vendor/bin/pint --ansi -vv"
         ],
         "pint:test": "@pint --test",
+        "pint:test-format-annotate-pull-request": [
+            "@putenv:xdebug-off",
+            "@php vendor/bin/pint --ansi -vv '--test' --format=checkstyle | vendor/bin/cs2pr --notices-as-warnings --colorize"
+        ],
         "putenv:composer-memory-unlimited": "@putenv COMPOSER_MEMORY_LIMIT=-1",
         "putenv:php": [
             "@putenv PHP74=/opt/homebrew/opt/php@7.4/bin/php",
@@ -378,6 +384,7 @@
         "rector:process-clear-cache": "@rector:process --clear-cache",
         "rector:process-clear-cache-dry-run": "@rector:process-clear-cache --dry-run",
         "rector:process-dry-run": "@rector:process --dry-run",
+        "rector:process-dry-run-output-format-github": "@rector:process-dry-run --output-format=github",
         "rector:process-only": "@rector:process-clear-cache tests.php --only=Guanguans\\PHPStanRules\\Rector\\Array_\\SortListItemOfSameScalarTypeRector",
         "rector:process-only-dry-run": "@rector:process-only --dry-run",
         "rule-doc-generator": [

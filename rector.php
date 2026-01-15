@@ -199,10 +199,10 @@ return RectorConfig::configure()
         WrapEncapsedVariableInCurlyBracesRector::class,
     ])
     ->withSkip([
-        NewExceptionToNewAnonymousExtendsExceptionImplementsRector::class => [
-            __DIR__.'/src/Support/helpers.php',
-            __DIR__.'/tests/Support/HelpersTest.php',
-        ],
+        // NewExceptionToNewAnonymousExtendsExceptionImplementsRector::class => [
+        //     __DIR__.'/src/Support/helpers.php',
+        //     __DIR__.'/tests/Support/HelpersTest.php',
+        // ],
         SortAssociativeArrayByKeyRector::class => [
             __DIR__.'/src/',
             __DIR__.'/tests/',

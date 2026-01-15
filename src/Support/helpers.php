@@ -268,7 +268,7 @@ if (!\function_exists('Guanguans\PHPStanRules\Support\is_subclass_of_any')) {
         $allowString ??= \is_string($objectOrClass);
 
         foreach ($classes as $class) {
-            if (is_subclass_of($objectOrClass, $class, $allowString)) {
+            if (is_subclass_of($objectOrClass,   $class, $allowString)) {
                 return true;
             }
         }
