@@ -141,6 +141,7 @@ parameters:
 #        - identifier: method.childParameterType
         - identifier: return.type
         - identifier: phpstanApi.runtimeReflection
+        - identifier: phpstanApi.method
         - identifier: symplify.explicitInterfaceSuffixName
 #        - identifier: symplify.forbiddenArrayMethodCall
         - identifier: symplify.forbiddenNode

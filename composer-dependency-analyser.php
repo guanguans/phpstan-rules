@@ -43,8 +43,7 @@ return (new Configuration)
     )
     ->ignoreErrorsOnPackages(
         [
-            // 'guanguans/phpstan-rules',
-            // 'phpstan/phpstan',
+            'staabm/side-effects-detector',
         ],
         [ErrorType::DEV_DEPENDENCY_IN_PROD]
     )

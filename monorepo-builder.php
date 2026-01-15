@@ -64,7 +64,11 @@ return static function (MBConfig $mbConfig): void {
         // PushNextDevReleaseWorker::class,
     ]);
 
-    if (!(new ArgvInput)->hasParameterOption('--dry-run', true)) {
+    if (
+        \PHP_MAJOR_VERSION === 7
+        && \PHP_MINOR_VERSION === 4
+        && !(new ArgvInput)->hasParameterOption('--dry-run', true)
+    ) {
         (new Process([
             (new PhpExecutableFinder)->find(),
             (new ExecutableFinder)->find($composer = 'composer', $composer),
