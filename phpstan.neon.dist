@@ -1,6 +1,7 @@
 includes:
     - baselines/loader.neon
 #    - phpstan-baseline.neon
+    - config/rules.neon
 
     - vendor/spaze/phpstan-disallowed-calls/disallowed-dangerous-calls.neon
     - vendor/spaze/phpstan-disallowed-calls/disallowed-execution-calls.neon
@@ -57,6 +58,12 @@ parameters:
         noParameterWithNullableTypeDeclaration:
             enabled: false
         noParameterWithNullDefaultValue:
+            enabled: false
+        noConstructorParameterWithDefaultValue:
+            enabled: false
+    guanguans:
+        exceptionMustImplementNativeThrowable:
+            implement: Guanguans\PHPStanRules\Contract\ThrowableContract
             enabled: false
     cognitive_complexity:
         class: 42
@@ -133,6 +140,7 @@ parameters:
 #        - identifier: encapsedStringPart.nonString
 #        - identifier: method.childParameterType
         - identifier: return.type
+        - identifier: phpstanApi.runtimeReflection
         - identifier: symplify.explicitInterfaceSuffixName
 #        - identifier: symplify.forbiddenArrayMethodCall
         - identifier: symplify.forbiddenNode

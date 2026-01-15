@@ -1,0 +1,25 @@
+conditionalTags:
+	Guanguans\PHPStanRules\Rule\ExceptionMustImplementNativeThrowableRule:
+		phpstan.rules.rule: %guanguans.exceptionMustImplementNativeThrowable.enabled%
+
+parameters:
+	guanguans:
+		allRules: true
+		exceptionMustImplementNativeThrowable:
+			implement: \Throwable
+			enabled: %guanguans.allRules%
+
+parametersSchema:
+	guanguans: structure([
+		allRules: bool()
+		exceptionMustImplementNativeThrowable: structure([
+			implement: string()
+			enabled: bool(),
+		])
+	])
+
+services:
+	-
+		class: Guanguans\PHPStanRules\Rule\ExceptionMustImplementNativeThrowableRule
+		arguments:
+			implement: %guanguans.exceptionMustImplementNativeThrowable.implement%

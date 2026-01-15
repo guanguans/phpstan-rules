@@ -55,7 +55,7 @@ return Factory::fromRuleSet(Php74::create()
         Finder::create()
             ->in(__DIR__)
             ->exclude([
-                'Fixtures/',
+                // 'Fixtures/',
                 'vendor-bin/',
             ])
             ->notPath([

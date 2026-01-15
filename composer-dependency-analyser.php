@@ -38,7 +38,6 @@ return (new Configuration)
     ->ignoreErrorsOnPackages(
         [
             'illuminate/support',
-            'phpstan/phpstan',
         ],
         [ErrorType::UNUSED_DEPENDENCY]
     )
