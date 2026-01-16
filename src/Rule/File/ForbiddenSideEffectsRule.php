@@ -11,8 +11,9 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/phpstan-rules
  */
 
-namespace Guanguans\PHPStanRules\Rule;
+namespace Guanguans\PHPStanRules\Rule\File;
 
+use Guanguans\PHPStanRules\Rule\AbstractRule;
 use Illuminate\Support\Str;
 use PhpParser\Node;
 use PhpParser\Node\Stmt;
@@ -23,12 +24,12 @@ use PHPStan\Rules\RuleErrorBuilder;
 use staabm\SideEffectsDetector\SideEffectsDetector;
 
 /**
- * @see \Guanguans\PHPStanRulesTests\Rule\ForbiddenSideEffectsFunctionLikeRule\ForbiddenSideEffectsFunctionLikeRuleTest
+ * @see \Guanguans\PHPStanRulesTests\Rule\File\ForbiddenSideEffectsRule\ForbiddenSideEffectsRuleTest
  * @see https://github.com/staabm/side-effects-detector
  *
  * @extends AbstractRule<FileNode>
  */
-final class ForbiddenSideEffectsFunctionLikeRule extends AbstractRule
+final class ForbiddenSideEffectsRule extends AbstractRule
 {
     private const IGNORED_SIDE_EFFECTS = [
         'maybe_has_side_effects',
@@ -108,7 +109,7 @@ final class ForbiddenSideEffectsFunctionLikeRule extends AbstractRule
     private function errorMessage(array $sideEffects): string
     {
         return \sprintf(
-            'The function like contains side effects: [%s].',
+            'The statement contains side effects: [%s].',
             implode(', ', $sideEffects)
         );
     }

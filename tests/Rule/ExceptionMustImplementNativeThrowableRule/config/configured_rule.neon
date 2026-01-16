@@ -1,9 +1,0 @@
-includes:
-    - ../../../../config/extension.neon
-
-parameters:
-    guanguans:
-        allRules: false
-        exceptionMustImplementNativeThrowable:
-            nativeThrowable: Guanguans\PHPStanRulesTests\Rule\ExceptionMustImplementNativeThrowableRule\Source\ThrowableContract
-            enabled: true

@@ -24,7 +24,7 @@ declare(strict_types=1);
 
 use Faker\Factory;
 use Faker\Generator;
-use Guanguans\PHPStanRulesTests\Rector\AbstractRectorTestCase;
+use Guanguans\PHPStanRulesTests\Rule\AbstractRuleTestCase;
 use Guanguans\PHPStanRulesTests\TestCase;
 use Pest\Expectation;
 
@@ -42,13 +42,13 @@ uses(TestCase::class)
         // __DIR__.'/Unit/'
     );
 
-// uses(AbstractRectorTestCase::class)
-//     // ->compact()
-//     ->beforeAll(function (): void {})
-//     ->beforeEach(function (): void {})
-//     ->afterEach(function (): void {})
-//     ->afterAll(function (): void {})
-//     ->in(__DIR__.'/Feature/');
+uses(AbstractRuleTestCase::class)
+    // ->compact()
+    ->beforeAll(function (): void {})
+    ->beforeEach(function (): void {})
+    ->afterEach(function (): void {})
+    ->afterAll(function (): void {})
+    ->in(__DIR__.'/Feature/');
 
 /*
 |--------------------------------------------------------------------------

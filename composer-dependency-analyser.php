@@ -43,7 +43,7 @@ return (new Configuration)
     )
     ->ignoreErrorsOnPackageAndPath(
         'staabm/side-effects-detector',
-        __DIR__.'/src/Rule/ForbiddenSideEffectsFunctionLikeRule.php',
+        __DIR__.'/src/Rule/File/ForbiddenSideEffectsRule.php',
         [ErrorType::DEV_DEPENDENCY_IN_PROD]
     )
     ->ignoreErrorsOnPackages(

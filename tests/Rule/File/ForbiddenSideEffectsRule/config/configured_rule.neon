@@ -1,8 +1,8 @@
 includes:
-    - ../../../../config/extension.neon
+    - ../../../../../config/extension.neon
 
 parameters:
     guanguans:
         allRules: false
-        forbiddenSideEffectsFunctionLike:
+        forbiddenSideEffects:
             enabled: true

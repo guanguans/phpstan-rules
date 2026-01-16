@@ -18,23 +18,20 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/phpstan-rules
  */
 
-namespace Guanguans\PHPStanRulesTests\Rule\ForbiddenSideEffectsFunctionLikeRule;
+namespace Guanguans\PHPStanRulesTests\Rule\New_\ExceptionMustImplementNativeThrowableRule;
 
 use Guanguans\PHPStanRulesTests\Rule\AbstractRuleTestCase;
 
-final class ForbiddenSideEffectsFunctionLikeRuleTest extends AbstractRuleTestCase
+final class ExceptionMustImplementNativeThrowableRuleTest extends AbstractRuleTestCase
 {
     /**
      * @return \Iterator<array<array<int, mixed>, mixed>>
      */
     public static function provideRuleCases(): iterable
     {
-        $errorMessage = self::invokeErrorMessage([
-            'process_exit',
-        ]);
-
-        // yield [__DIR__.'/Fixtures/ForbiddenSideEffectsFunctionLike.php', []];
-        yield [__DIR__.'/Fixtures/ForbiddenSideEffectsFunctionLike.php', [[$errorMessage, 25]]];
+        yield [__DIR__.'/Fixtures/ExceptionMustImplementNativeThrowable.php', [
+            [self::invokeRuleErrorMessageMethod(\Exception::class), 21],
+        ]];
     }
 
     protected static function directory(): string

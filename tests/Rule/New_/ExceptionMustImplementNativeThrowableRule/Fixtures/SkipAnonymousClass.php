@@ -12,14 +12,12 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/phpstan-rules
  */
 
-namespace Guanguans\PHPStanRulesTests\Rule\ExceptionMustImplementNativeThrowableRule\Fixtures;
-
-use Guanguans\PHPStanRulesTests\Rule\ExceptionMustImplementNativeThrowableRule\Source\Exception;
+namespace Guanguans\PHPStanRulesTests\Rule\New_\ExceptionMustImplementNativeThrowableRule\Fixtures;
 
 final class SkipImplemented
 {
     public function run(): void
     {
-        throw new Exception(fake()->text());
+        throw new class(fake()->text()) extends \Exception {};
     }
 }

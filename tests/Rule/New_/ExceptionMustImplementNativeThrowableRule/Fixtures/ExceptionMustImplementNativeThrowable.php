@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/phpstan-rules
  */
 
-namespace Guanguans\PHPStanRulesTests\Rule\ExceptionMustImplementNativeThrowableRule\Fixtures;
+namespace Guanguans\PHPStanRulesTests\Rule\New_\ExceptionMustImplementNativeThrowableRule\Fixtures;
 
 final class ExceptionMustImplementNativeThrowable
 {

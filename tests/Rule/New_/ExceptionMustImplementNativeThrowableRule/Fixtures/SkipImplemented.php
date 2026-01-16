@@ -12,16 +12,14 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/phpstan-rules
  */
 
-namespace Guanguans\PHPStanRulesTests\Rule\ForbiddenSideEffectsFunctionLikeRule\Fixtures;
+namespace Guanguans\PHPStanRulesTests\Rule\New_\ExceptionMustImplementNativeThrowableRule\Fixtures;
 
-final class ForbiddenSideEffectsFunctionLike
+use Guanguans\PHPStanRulesTests\Rule\New_\ExceptionMustImplementNativeThrowableRule\Source\Exception;
+
+final class SkipImplemented
 {
     public function run(): void
     {
-        unknown_function();
-
-        require __FILE__;
-
-        exit(0);
+        throw new Exception(fake()->text());
     }
 }

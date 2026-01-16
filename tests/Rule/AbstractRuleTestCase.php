@@ -23,14 +23,15 @@ namespace Guanguans\PHPStanRulesTests\Rule;
 use Guanguans\PHPStanRules\Rule\AbstractRule;
 use Illuminate\Support\Str;
 use PHPStan\Testing\RuleTestCase;
-use Webmozart\Assert\Assert;
 
 abstract class AbstractRuleTestCase extends RuleTestCase
 {
+    private const ERROR_MESSAGE_METHOD_NAME = 'errorMessage';
+
     /**
      * @dataProvider provideRuleCases()
      *
-     * @param array<int, list<int|string>> $expectedErrorMessagesWithLines
+     * @param list<array{0: string, 1: int, 2?: null|string}> $expectedErrorMessages
      *
      * @noinspection PhpUndefinedNamespaceInspection
      * @noinspection PhpLanguageLevelInspection
@@ -39,10 +40,9 @@ abstract class AbstractRuleTestCase extends RuleTestCase
      * @noinspection PhpUnitTestsInspection
      */
     #[\PHPUnit\Framework\Attributes\DataProvider('provideRuleCases')]
-    final public function testRule(string $filePath, array $expectedErrorMessagesWithLines): void
+    final public function testRule(string $filePath, array $expectedErrorMessages): void
     {
-        Assert::allInteger(array_keys($expectedErrorMessagesWithLines));
-        $this->analyse([$filePath], $expectedErrorMessagesWithLines);
+        $this->analyse([$filePath], $expectedErrorMessages);
     }
 
     final public function testRuleWithoutErrorMessage(): void
@@ -50,10 +50,15 @@ abstract class AbstractRuleTestCase extends RuleTestCase
         $this->analyse(glob(static::directory().'/Fixtures/Skip*.php'), []);
     }
 
-    final public function testRuleCommon(): void
+    final public function testRuleBasicInformation(): void
     {
-        // self::assertInstanceOf(static::ruleClass(), $this->getRule());
-        self::assertTrue(method_exists($this->getRule(), 'errorMessage'));
+        self::assertTrue(is_subclass_of(static::ruleClass(), AbstractRule::class));
+        self::assertTrue(method_exists($this->getRule(), self::ERROR_MESSAGE_METHOD_NAME));
+        self::assertFileExists(\sprintf(
+            '%s/Fixtures/%s.php',
+            static::directory(),
+            Str::beforeLast(static::ruleReflectionClass()->getShortName(), 'Rule')
+        ));
     }
 
     /**
@@ -79,15 +84,15 @@ abstract class AbstractRuleTestCase extends RuleTestCase
         return static::getContainer()->getByType(static::ruleClass());
     }
 
-    protected static function invokeErrorMessage(...$args)
+    protected static function invokeRuleErrorMessageMethod(...$args)
     {
-        return static::invoke('errorMessage', ...$args);
+        return static::invokeRuleMethod(self::ERROR_MESSAGE_METHOD_NAME, ...$args);
     }
 
-    protected static function invoke(string $method, ...$args)
+    protected static function invokeRuleMethod(string $method, ...$args)
     {
         $reflectionMethod = static::ruleReflectionClass()->getMethod($method);
-        $reflectionMethod->setAccessible(true);
+        \PHP_VERSION_ID < 80100 and $reflectionMethod->setAccessible(true);
 
         return $reflectionMethod->invoke(static::rawGetRule(), ...$args);
     }

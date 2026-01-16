@@ -1,5 +1,6 @@
 <?php
 
+/** @noinspection ALL */
 declare(strict_types=1);
 
 /**
@@ -11,6 +12,9 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/phpstan-rules
  */
 
-namespace Guanguans\PHPStanRulesTests\Rule\ExceptionMustImplementNativeThrowableRule\Source;
+namespace Guanguans\PHPStanRulesTests\Rule\File\ForbiddenSideEffectsRule\Fixtures;
 
-interface ThrowableContract extends \Throwable {}
+final class SkipImplemented
+{
+    public function run(): void {}
+}

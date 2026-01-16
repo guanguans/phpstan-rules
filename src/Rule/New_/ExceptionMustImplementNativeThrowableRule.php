@@ -11,8 +11,9 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/phpstan-rules
  */
 
-namespace Guanguans\PHPStanRules\Rule;
+namespace Guanguans\PHPStanRules\Rule\New_;
 
+use Guanguans\PHPStanRules\Rule\AbstractRule;
 use PhpParser\Node;
 use PhpParser\Node\Expr\New_;
 use PhpParser\Node\Name;
@@ -20,7 +21,7 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Rules\RuleErrorBuilder;
 
 /**
- * @see \Guanguans\PHPStanRulesTests\Rule\ExceptionMustImplementNativeThrowableRule\ExceptionMustImplementNativeThrowableRuleTest
+ * @see \Guanguans\PHPStanRulesTests\Rule\New_\ExceptionMustImplementNativeThrowableRule\ExceptionMustImplementNativeThrowableRuleTest
  * @see \Guanguans\RectorRules\Rector\New_\NewExceptionToNewAnonymousExtendsExceptionImplementsRector
  * @see https://github.com/symfony/ai/blob/main/.phpstan/ForbidNativeExceptionRule.php
  * @see https://github.com/thecodingmachine/phpstan-strict-rules/tree/master/src/Rules/Exceptions/

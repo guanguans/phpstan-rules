@@ -5,7 +5,7 @@ parameters:
         -
             message: '#^Throwing checked exception PHPStan\\ShouldNotHappenException in arrow function\!$#'
             count: 1
-            path: ../src/Rule/ForbiddenSideEffectsFunctionLikeRule.php
+            path: ../src/Rule/File/ForbiddenSideEffectsRule.php
 
         -
             message: '#^Throwing checked exception ErrorException in closure\!$#'

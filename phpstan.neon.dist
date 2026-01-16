@@ -67,6 +67,8 @@ parameters:
         exceptionMustImplementNativeThrowable:
             nativeThrowable: Guanguans\PHPStanRules\Contract\ThrowableContract
             enabled: false
+        forbiddenSideEffects:
+            enabled: true
     cognitive_complexity:
         class: 42
         function: 8
