@@ -37,14 +37,13 @@ return (new Configuration)
     )
     ->ignoreErrorsOnPackages(
         [
-            'illuminate/support',
+            // 'illuminate/support',
         ],
         [ErrorType::UNUSED_DEPENDENCY]
     )
-    ->ignoreErrorsOnPackages(
-        [
-            'staabm/side-effects-detector',
-        ],
+    ->ignoreErrorsOnPackageAndPath(
+        'staabm/side-effects-detector',
+        __DIR__.'/src/Rule/ForbiddenSideEffectsFunctionLikeRule.php',
         [ErrorType::DEV_DEPENDENCY_IN_PROD]
     )
     ->ignoreErrorsOnPackages(

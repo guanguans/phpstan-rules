@@ -1,6 +1,6 @@
 {
     "name": "guanguans/phpstan-rules",
-    "description": "A set of phpstan/phpstan rules. - 一套 phpstan/phpstan 规则。",
+    "description": "A set of additional rules for phpstan/phpstan. - 一套针对 `phpstan/phpstan` 的附加规则。",
     "license": "MIT",
     "type": "library",
     "keywords": [
@@ -86,6 +86,9 @@
         "tomasvotruba/type-coverage": "^2.1",
         "tomasvotruba/unused-public": "^2.2",
         "yamadashy/phpstan-friendly-formatter": "^1.2"
+    },
+    "suggest": {
+        "staabm/side-effects-detector": "Required to use the rule [ForbiddenSideEffectsRule]."
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
@@ -173,6 +176,7 @@
             "@jsonlint",
             "@phpmnd",
             "@phpstan:analyse",
+            "@phpstan-rules:fix-neon-files",
             "@phpstan-rules:list-files",
             "@rector:process-dry-run",
             "@sk:check-commented-code",
@@ -199,7 +203,7 @@
             "@pest"
         ],
         "class-leak": "@php vendor/bin/class-leak --ansi -vv",
-        "class-leak:check": "@class-leak check src/ --skip-type=Guanguans\\PHPStanRules\\Contract\\ThrowableContract --skip-type=Guanguans\\PHPStanRules\\Rule\\ExceptionRule --skip-path=Support/",
+        "class-leak:check": "@class-leak check src/ --skip-path=Support/",
         "composer-bump": [
             "@putenv:php",
             "@composer-config:disable-process-timeout",
@@ -338,6 +342,7 @@
             "ls -lh builds/phpstan-rules.phar",
             "ls -lr builds/phpstan-rules.phar"
         ],
+        "phpstan-rules:fix-neon-files": "Guanguans\\PHPStanRules\\Support\\ComposerScripts::fixNeonFiles",
         "phpstan-rules:list-files": "Guanguans\\PHPStanRules\\Support\\ComposerScripts::listFiles",
         "phpstan:analyse": "@phpstan analyse",
         "phpstan:analyse-error-format-annotate-pull-request": "@php vendor/bin/phpstan --ansi -vv 'analyse' --error-format=checkstyle | vendor/bin/cs2pr --notices-as-warnings --colorize",

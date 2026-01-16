@@ -1,7 +1,7 @@
 # phpstan-rules
 
 > [!NOTE]
-> A set of phpstan/phpstan rules. - 一套 phpstan/phpstan 规则。
+> A set of additional rules for phpstan/phpstan. - 一套针对 `phpstan/phpstan` 的附加规则。
 
 [![tests](https://github.com/guanguans/phpstan-rules/actions/workflows/tests.yml/badge.svg)](https://github.com/guanguans/phpstan-rules/actions/workflows/tests.yml)
 [![php-cs-fixer](https://github.com/guanguans/phpstan-rules/actions/workflows/php-cs-fixer.yml/badge.svg)](https://github.com/guanguans/phpstan-rules/actions/workflows/php-cs-fixer.yml)

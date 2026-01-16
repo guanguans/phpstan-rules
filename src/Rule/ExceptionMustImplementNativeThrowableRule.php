@@ -17,7 +17,6 @@ use PhpParser\Node;
 use PhpParser\Node\Expr\New_;
 use PhpParser\Node\Name;
 use PHPStan\Analyser\Scope;
-use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
 
 /**
@@ -26,12 +25,10 @@ use PHPStan\Rules\RuleErrorBuilder;
  * @see https://github.com/symfony/ai/blob/main/.phpstan/ForbidNativeExceptionRule.php
  * @see https://github.com/thecodingmachine/phpstan-strict-rules/tree/master/src/Rules/Exceptions/
  *
- * @implements Rule<Node\Expr\New_>
+ * @extends AbstractRule<New_>
  */
-final class ExceptionMustImplementNativeThrowableRule implements Rule
+final class ExceptionMustImplementNativeThrowableRule extends AbstractRule
 {
-    /** @api */
-    public const ERROR_MESSAGE = 'The exception [%s] must implement the native throwable [%s].';
     private string $nativeThrowable;
 
     /**
@@ -39,6 +36,7 @@ final class ExceptionMustImplementNativeThrowableRule implements Rule
      */
     public function __construct(string $nativeThrowable)
     {
+        \assert(is_subclass_of($nativeThrowable, \Throwable::class));
         $this->nativeThrowable = $nativeThrowable;
     }
 
@@ -64,14 +62,19 @@ final class ExceptionMustImplementNativeThrowableRule implements Rule
         }
 
         return [
-            RuleErrorBuilder::message($this->createErrorMessage($class))
-                ->identifier('guanguans.exceptionMustImplementNativeThrowable')
+            RuleErrorBuilder::message($this->errorMessage($class))
+                ->identifier($this->identifier())
+                ->line($node->getStartLine())
                 ->build(),
         ];
     }
 
-    private function createErrorMessage(string $class): string
+    private function errorMessage(string $class): string
     {
-        return \sprintf(self::ERROR_MESSAGE, $class, $this->nativeThrowable);
+        return \sprintf(
+            'The exception [%s] must implement the native throwable [%s].',
+            $class,
+            $this->nativeThrowable
+        );
     }
 }

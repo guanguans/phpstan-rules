@@ -13,24 +13,27 @@ declare(strict_types=1);
 
 namespace Guanguans\PHPStanRules\Rule;
 
+use Illuminate\Support\Str;
 use PhpParser\Node;
-use PhpParser\Node\FunctionLike;
+use PhpParser\Node\Stmt;
 use PHPStan\Analyser\Scope;
 use PHPStan\File\FileReader;
-use PHPStan\Rules\Rule;
+use PHPStan\Node\FileNode;
 use PHPStan\Rules\RuleErrorBuilder;
 use staabm\SideEffectsDetector\SideEffectsDetector;
 
 /**
- * @see https://github.com/staabm/side-effects-detector
  * @see \Guanguans\PHPStanRulesTests\Rule\ForbiddenSideEffectsFunctionLikeRule\ForbiddenSideEffectsFunctionLikeRuleTest
+ * @see https://github.com/staabm/side-effects-detector
  *
- * @implements Rule<\PhpParser\Node\FunctionLike>
+ * @extends AbstractRule<FileNode>
  */
-final class ForbiddenSideEffectsFunctionLikeRule implements Rule
+final class ForbiddenSideEffectsFunctionLikeRule extends AbstractRule
 {
-    /** @api */
-    public const ERROR_MESSAGE = 'The function like contains side effects: [%s].';
+    private const IGNORED_SIDE_EFFECTS = [
+        'maybe_has_side_effects',
+        'scope_pollution',
+    ];
     private SideEffectsDetector $sideEffectsDetector;
 
     public function __construct(SideEffectsDetector $sideEffectsDetector)
@@ -40,49 +43,73 @@ final class ForbiddenSideEffectsFunctionLikeRule implements Rule
 
     public function getNodeType(): string
     {
-        return FunctionLike::class;
+        return FileNode::class;
     }
 
     /**
-     * @param \PhpParser\Node\FunctionLike $node
+     * @param \PHPStan\Node\FileNode $node
      *
      * @throws \PHPStan\File\CouldNotReadFileException
-     * @throws \PHPStan\ShouldNotHappenException
      */
     public function processNode(Node $node, Scope $scope): array
     {
-        $sideEffects = $this->sideEffectsDetector->getSideEffects((string) substr(
-            FileReader::read($scope->getFile()),
-            $node->getStartFilePos(),
-            $node->getEndFilePos() - $node->getStartFilePos() + 1
-        ));
+        $contents = FileReader::read($scope->getFile());
 
-        $sideEffects = collect($sideEffects)
-            // ->dump()
-            ->reject(static fn (string $sideEffect): bool => \in_array(
-                $sideEffect,
-                ['standard_output', 'standard_output'],
-                true
-            ))
-            // ->dump()
+        return collect($node->getNodes())
+            ->map(fn (Node $node): array => $this->rawProcessNode($node, $contents))
+            ->flatten()
             ->all();
+    }
 
-        if ([] === $sideEffects) {
-            return [];
+    /**
+     * @throws \PHPStan\ShouldNotHappenException
+     *
+     * @return list<\PHPStan\Rules\RuleError>
+     */
+    private function rawProcessNode(Node $node, string $contents): array
+    {
+        if (property_exists($node, 'stmts') && \is_array($node->stmts)) {
+            return array_map(
+                fn (Stmt $stmtNode): array => $this->rawProcessNode($stmtNode, $contents),
+                $node->stmts
+            );
         }
 
-        return [
-            RuleErrorBuilder::message($this->createErrorMessage($sideEffects))
-                ->identifier('guanguans.forbiddenSideEffectsFunctionLike')
-                ->build(),
-        ];
+        $sideEffects = array_filter(
+            $this->sideEffectsDetector->getSideEffects($this->parseNodeCode($node, $contents)),
+            static fn (string $sideEffect): bool => !\in_array($sideEffect, self::IGNORED_SIDE_EFFECTS, true)
+        );
+
+        return [] === $sideEffects
+            ? []
+            : [
+                RuleErrorBuilder::message($this->errorMessage($sideEffects))
+                    ->identifier($this->identifier())
+                    ->line($node->getStartLine())
+                    ->build(),
+            ];
+    }
+
+    private function parseNodeCode(Node $node, string $contents): string
+    {
+        return Str::start(
+            (string) substr(
+                $contents,
+                $node->getStartFilePos(),
+                $node->getEndFilePos() - $node->getStartFilePos() + 1
+            ),
+            '<?php '
+        );
     }
 
     /**
      * @param list<string> $sideEffects
      */
-    private function createErrorMessage(array $sideEffects): string
+    private function errorMessage(array $sideEffects): string
     {
-        return \sprintf(self::ERROR_MESSAGE, implode(', ', $sideEffects));
+        return \sprintf(
+            'The function like contains side effects: [%s].',
+            implode(', ', $sideEffects)
+        );
     }
 }

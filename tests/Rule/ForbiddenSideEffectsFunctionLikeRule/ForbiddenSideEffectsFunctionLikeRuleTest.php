@@ -20,57 +20,25 @@ declare(strict_types=1);
 
 namespace Guanguans\PHPStanRulesTests\Rule\ForbiddenSideEffectsFunctionLikeRule;
 
-use Guanguans\PHPStanRules\Rule\ForbiddenSideEffectsFunctionLikeRule;
-use PHPStan\Rules\Rule;
-use PHPStan\Testing\RuleTestCase;
-use Webmozart\Assert\Assert;
+use Guanguans\PHPStanRulesTests\Rule\AbstractRuleTestCase;
 
-final class ForbiddenSideEffectsFunctionLikeRuleTest extends RuleTestCase
+final class ForbiddenSideEffectsFunctionLikeRuleTest extends AbstractRuleTestCase
 {
-    /**
-     * @dataProvider provideRuleCases()
-     *
-     * @param array<int, list<int|string>> $expectedErrorMessagesWithLines
-     *
-     * @noinspection PhpUndefinedNamespaceInspection
-     * @noinspection PhpLanguageLevelInspection
-     * @noinspection PhpFullyQualifiedNameUsageInspection
-     */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideRuleCases')]
-    public function testRule(string $filePath, array $expectedErrorMessagesWithLines): void
-    {
-        Assert::allInteger(array_keys($expectedErrorMessagesWithLines));
-        $this->analyse([$filePath], $expectedErrorMessagesWithLines);
-    }
-
     /**
      * @return \Iterator<array<array<int, mixed>, mixed>>
      */
     public static function provideRuleCases(): iterable
     {
-        // $errorMessage = \sprintf(
-        //     ForbiddenSideEffectsFunctionLikeRule::ERROR_MESSAGE,
-        //     implode(', ', [
-        //         'standard_output',
-        //     ])
-        // );
+        $errorMessage = self::invokeErrorMessage([
+            'process_exit',
+        ]);
 
-        // yield [__DIR__.'/Fixtures/ForbiddenSideEffectsFunctionLike.php', [[$errorMessage, 19]]];
-        yield [__DIR__.'/Fixtures/ForbiddenSideEffectsFunctionLike.php', []];
-
-        yield [__DIR__.'/Fixtures/SkipNonSideEffects.php', []];
+        // yield [__DIR__.'/Fixtures/ForbiddenSideEffectsFunctionLike.php', []];
+        yield [__DIR__.'/Fixtures/ForbiddenSideEffectsFunctionLike.php', [[$errorMessage, 25]]];
     }
 
-    /**
-     * @return list<string>
-     */
-    public static function getAdditionalConfigFiles(): array
+    protected static function directory(): string
     {
-        return [__DIR__.'/config/configured_rule.neon'];
-    }
-
-    protected function getRule(): Rule
-    {
-        return self::getContainer()->getByType(ForbiddenSideEffectsFunctionLikeRule::class);
+        return __DIR__;
     }
 }

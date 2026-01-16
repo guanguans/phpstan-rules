@@ -1,8 +1,18 @@
-# total 1 error
+# total 3 errors
 
 parameters:
     ignoreErrors:
         -
+            message: '#^Throwing checked exception PHPStan\\ShouldNotHappenException in arrow function\!$#'
+            count: 1
+            path: ../src/Rule/ForbiddenSideEffectsFunctionLikeRule.php
+
+        -
             message: '#^Throwing checked exception ErrorException in closure\!$#'
+            count: 1
+            path: ../src/Support/helpers.php
+
+        -
+            message: '#^Throwing checked exception ReflectionException in closure\!$#'
             count: 1
             path: ../src/Support/helpers.php

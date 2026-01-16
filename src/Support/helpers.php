@@ -44,6 +44,7 @@ if (!\function_exists('Guanguans\PHPStanRules\Support\classes')) {
      * @param null|(callable(class-string<TObject>, string): bool) $filter
      *
      * @throws \ErrorException
+     * @throws \ReflectionException
      *
      * @return \Illuminate\Support\Collection<class-string<TObject>, \ReflectionClass<TObject>|\Throwable>
      *
@@ -51,23 +52,20 @@ if (!\function_exists('Guanguans\PHPStanRules\Support\classes')) {
      */
     function classes(?callable $filter = null): Collection
     {
-        $filter ??= static fn (string $class, string $file): bool => true;
+        $func = __FUNCTION__;
+        $errorMessenger = static fn (
+            string $file,
+            string $class
+        ): string => "Failed to reflect the class [$class] in the file [$file]. "
+            ."You may need to filter out the class or file using the callback parameter of the function [$func()].";
 
-        /** @var null|\Illuminate\Support\Collection<string, class-string> $classes */
-        static $classes;
-        $classes ??= collect(spl_autoload_functions())->flatMap(
-            static fn (callable $loader): array => \is_array($loader) && $loader[0] instanceof ClassLoader
-                ? $loader[0]->getClassMap()
-                : []
-        );
-
-        /** @var null|array{class: class-string<TObject>, line: int} $context */
+        /** @var null|array{file: string, class: class-string<TObject>, line: int} $context */
         static $context = null;
         static $registered = false;
 
         if (!$registered) {
             register_shutdown_function(
-                static function (string $func) use (&$context): void {
+                static function () use (&$context, $errorMessenger): void {
                     // @codeCoverageIgnoreStart
                     if (
                         null === $context
@@ -77,10 +75,9 @@ if (!\function_exists('Guanguans\PHPStanRules\Support\classes')) {
                         return;
                     }
 
-                    // trigger_error('Error message...', \E_USER_ERROR);
+                    // trigger_error($errorMessenger($context['file'], $context['class']), \E_USER_ERROR);
                     throw new \ErrorException(
-                        "Fatal Error detected during reflection of class [{$context['class']}]".\PHP_EOL.
-                        "You may need to filter out the class using the callback parameter of the function [$func()]",
+                        $errorMessenger($context['file'], $context['class']),
                         0,
                         $error['type'],
                         __FILE__,
@@ -88,22 +85,30 @@ if (!\function_exists('Guanguans\PHPStanRules\Support\classes')) {
                         new \ErrorException($error['message'], 0, $error['type'], $error['file'], $error['line'])
                     );
                     // @codeCoverageIgnoreEnd
-                },
-                __FUNCTION__
+                }
             );
-
             $registered = true;
         }
 
+        /** @var null|\Illuminate\Support\Collection<string, class-string> $classes */
+        static $classes;
+        $classes ??= collect(spl_autoload_functions())->flatMap(
+            static fn (callable $loader): array => \is_array($loader) && $loader[0] instanceof ClassLoader
+                ? $loader[0]->getClassMap()
+                : []
+        );
+        $filter ??= static fn (string $class, string $file): bool => true;
+
         return $classes
             ->filter(static fn (string $file, string $class): bool => $filter($class, $file))
-            ->mapWithKeys(static function (string $file, string $class) use (&$context): array {
+            ->mapWithKeys(static function (string $file, string $class) use (&$context, $errorMessenger): array {
                 try {
-                    $context = ['class' => $class, 'line' => __LINE__ + 2];
+                    $context = ['file' => $file, 'class' => $class, 'line' => __LINE__ + 2];
 
                     return [$class => new \ReflectionClass($class)];
                 } catch (\Throwable $throwable) {
-                    return [$class => $throwable];
+                    // return [$class => $throwable];
+                    throw new \ReflectionException($errorMessenger($file, $class), 0, $throwable);
                 } finally {
                     $context = null;
                 }
@@ -121,25 +126,6 @@ if (!\function_exists('Guanguans\PHPStanRules\Support\clone_node')) {
      *
      * @return TNode
      */
-    // function clone_node(Node $node): Node
-    // {
-    //     $node = clone $node;
-    //
-    //     foreach ($node->getSubNodeNames() as $subNodeName) {
-    //         $subNode = $node->{$subNodeName};
-    //
-    //         if ($subNode instanceof Node) {
-    //             $node->{$subNodeName} = clone_node($subNode);
-    //         } elseif (\is_array($subNode)) {
-    //             $node->{$subNodeName} = array_map(
-    //                 static fn ($node) => $node instanceof Node ? clone_node($node) : $node,
-    //                 $subNode
-    //             );
-    //         }
-    //     }
-    //
-    //     return $node;
-    // }
     function clone_node(Node $node): Node
     {
         /** @var array{0: TNode} $nodes */

@@ -19,8 +19,6 @@ namespace Guanguans\PHPStanRules\Support;
 use Composer\Script\Event;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Rector\Config\RectorConfig;
-use Rector\DependencyInjection\LazyContainerFactory;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputDefinition;
@@ -29,6 +27,7 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * @internal
@@ -46,29 +45,9 @@ final class ComposerScripts
     private function __construct() {}
 
     /**
-     * @see https://github.com/rectorphp/rector-src/blob/main/scoper.php
-     * @see \Rector\Application\ChangedNodeScopeRefresher
-     * @see \Rector\BetterPhpDocParser\Comment\CommentsMerger
-     * @see \Rector\BetterPhpDocParser\PhpDocManipulator\
-     * @see \Rector\Naming\ParamRenamer\
-     * @see \Rector\Naming\PhpDoc\
-     * @see \Rector\Naming\PropertyRenamer\
-     * @see \Rector\Naming\VariableRenamer
-     * @see \Rector\NodeAnalyzer\
-     * @see \Rector\NodeAnalyzer\ExprAnalyzer
-     * @see \Rector\NodeAnalyzer\ScopeAnalyzer
-     * @see \Rector\NodeNameResolver\
-     * @see \Rector\NodeTypeResolver\PhpDoc\NodeAnalyzer\DocBlockClassRenamer
-     * @see \Rector\PhpDocParser\NodeTraverser\SimpleCallableNodeTraverser
-     * @see \Rector\PhpParser\Comparing\
-     * @see \Rector\PhpParser\Enum\NodeGroup
-     * @see \Rector\PhpParser\NodeFinder\
-     * @see \Rector\PhpParser\NodeTraverser\
-     * @see \Rector\PhpParser\NodeVisitor\
-     * @see \Rector\PhpParser\Parser\
-     * @see \Rector\PhpParser\Printer\
-     * @see \Rector\PostRector\Rector\
-     * @see \Rector\Renaming\NodeManipulator\ClassRenamer
+     * @see vendor/phpstan/phpstan/phpstan.phar/preload.php
+     *
+     * @throws \ErrorException
      *
      * @return int<0>|never-returns<1>
      *
@@ -78,29 +57,22 @@ final class ComposerScripts
     {
         self::requireAutoload($event);
 
-        // $files = (new Finder)->files()->in('phar://vendor/phpstan/phpstan/phpstan.phar/src/')->name('*.php');
-        // require_once $event->getComposer()->getConfig()->get('vendor-dir').'/phpstan/phpstan/vendor/autoload.php';
+        // require_once 'phar://vendor/phpstan/phpstan/phpstan.phar/preload.php';
         require_once 'phar://vendor/phpstan/phpstan/phpstan.phar/vendor/autoload.php';
 
-        require_once 'phar://vendor/phpstan/phpstan/phpstan.phar/preload.php';
-
         classes(
-            static fn (string $class, string $file): bool => Str::of($class)->startsWith('Rector\\')
+            static fn (string $class, string $file): bool => Str::of($class)->startsWith('PHPStan\\')
                 && Str::of($class)->endsWith([
-                    // 'Factory',
-                    // 'Resolver',
                     'er',
                     // 'Renamer',
+                    // 'Resolver',
+                    'Factory',
                 ])
                 && !Str::of($file)->contains([
-                    '/rector/',
-                    '/rector-doctrine/',
-                    '/rector-downgrade-php/',
-                    '/rector-phpunit/',
-                    '/rector-symfony/',
-                    '/jack/',
-                    '/swiss-knife/',
-                    '/type-perfect/',
+                    '/src/Testing/PHPUnit/InitContainerBeforeDataProviderSubscriber.php',
+                    '/src/Testing/PHPUnit/InitContainerBeforeTestSubscriber.php',
+                    '/phpstan-deprecation-rules/',
+                    '/phpstan-strict-rules/',
                 ])
         )
             ->sortKeys()
@@ -111,18 +83,68 @@ final class ComposerScripts
                 $event->getIO()->info("Found {$classes->count()} files:");
                 $event->getIO()->info('');
             })
-            ->each(static function (\ReflectionClass $reflectionClass) use ($event): void {
+            ->each(static function ($reflectionClass) use ($event): void {
                 $event->getIO()->info(Str::remove(getcwd().\DIRECTORY_SEPARATOR, $reflectionClass->getFileName()));
             });
+
+        $event->getIO()->info('');
+        $event->getIO()->info('No errors');
 
         return 0;
     }
 
-    public static function makeRectorConfig(): RectorConfig
+    public static function fixNeonFiles(Event $event): int
     {
-        static $rectorConfig;
+        self::requireAutoload($event);
 
-        return $rectorConfig ??= (new LazyContainerFactory)->create();
+        collect(
+            Finder::create()
+                ->in(getcwd())
+                ->name(['*.neon', '*.neon.dist'])
+                ->ignoreDotFiles(false)
+                ->ignoreUnreadableDirs(false)
+                ->ignoreVCS(true)
+                ->ignoreVCSIgnored(true)
+                ->files()
+        )
+            ->tap(static function (Collection $files) use ($event): void {
+                $event->getIO()->info('');
+                $event->getIO()->info("Found {$files->count()} neon files:");
+                $event->getIO()->info('');
+            })
+            ->each(static function (SplFileInfo $file) use ($event): void {
+                $event->getIO()->info(Str::remove(getcwd().\DIRECTORY_SEPARATOR, $file->getRealPath()));
+            })
+            ->reduce(
+                static function (Collection $carry, SplFileInfo $file): Collection {
+                    $contents = $file->getContents();
+                    $fixedContents = (string) Str::of($contents)->replace("\t", '    ')->trim()->append("\n");
+
+                    if ($contents === $fixedContents) {
+                        return $carry;
+                    }
+
+                    file_put_contents($file->getRealPath(), $fixedContents);
+
+                    return $carry->push($file);
+                },
+                collect()
+            )
+            ->tap(static function (Collection $fixedFiles) use ($event): void {
+                $event->getIO()->info('');
+                $event->getIO()->info("Fixed {$fixedFiles->count()} neon files:");
+                $event->getIO()->info('');
+            })
+            ->each(static function (SplFileInfo $file) use ($event): void {
+                $event->getIO()->info(Str::remove(getcwd().\DIRECTORY_SEPARATOR, $file->getRealPath()));
+            })
+            ->tap(static function (Collection $fixedFiles): void {
+                $fixedFiles->isEmpty() or exit(1);
+            });
+
+        $event->getIO()->info('No errors');
+
+        return 0;
     }
 
     /**

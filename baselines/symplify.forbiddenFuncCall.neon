@@ -1,0 +1,13 @@
+# total 2 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Function "property_exists\(\)" cannot be used/left in the code$#'
+            count: 1
+            path: ../src/Rule/ForbiddenSideEffectsFunctionLikeRule.php
+
+        -
+            message: '#^Function "property_exists\(\)" cannot be used/left in the code\: use ReflectionProvider\-\>has\*\(\) instead$#'
+            count: 1
+            path: ../src/Rule/ForbiddenSideEffectsFunctionLikeRule.php

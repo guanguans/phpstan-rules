@@ -11,6 +11,6 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/phpstan-rules
  */
 
-namespace Guanguans\PHPStanRules\Contract;
+namespace Guanguans\PHPStanRulesTests\Rule\ExceptionMustImplementNativeThrowableRule\Source;
 
 interface ThrowableContract extends \Throwable {}

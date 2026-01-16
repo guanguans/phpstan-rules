@@ -20,60 +20,22 @@ declare(strict_types=1);
 
 namespace Guanguans\PHPStanRulesTests\Rule\ExceptionMustImplementNativeThrowableRule;
 
-use Guanguans\PHPStanRules\Contract\ThrowableContract;
-use Guanguans\PHPStanRules\Rule\ExceptionMustImplementNativeThrowableRule;
-use PHPStan\Rules\Rule;
-use PHPStan\Testing\RuleTestCase;
-use Webmozart\Assert\Assert;
+use Guanguans\PHPStanRulesTests\Rule\AbstractRuleTestCase;
 
-final class ExceptionMustImplementNativeThrowableRuleTest extends RuleTestCase
+final class ExceptionMustImplementNativeThrowableRuleTest extends AbstractRuleTestCase
 {
-    /**
-     * @dataProvider provideRuleCases()
-     *
-     * @param array<int, list<int|string>> $expectedErrorMessagesWithLines
-     *
-     * @noinspection PhpUndefinedNamespaceInspection
-     * @noinspection PhpLanguageLevelInspection
-     * @noinspection PhpFullyQualifiedNameUsageInspection
-     */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideRuleCases')]
-    public function testRule(string $filePath, array $expectedErrorMessagesWithLines): void
-    {
-        Assert::allInteger(array_keys($expectedErrorMessagesWithLines));
-        $this->analyse([$filePath], $expectedErrorMessagesWithLines);
-    }
-
     /**
      * @return \Iterator<array<array<int, mixed>, mixed>>
      */
     public static function provideRuleCases(): iterable
     {
-        $errorMessage = \sprintf(
-            ExceptionMustImplementNativeThrowableRule::ERROR_MESSAGE,
-            \Exception::class,
-            ThrowableContract::class
-        );
+        $errorMessage = self::invokeErrorMessage(\Exception::class);
 
         yield [__DIR__.'/Fixtures/ExceptionMustImplementNativeThrowable.php', [[$errorMessage, 21]]];
-
-        yield [__DIR__.'/Fixtures/SkipAnonymousClass.php', []];
-
-        yield [__DIR__.'/Fixtures/SkipAnonymousClass.php', []];
-
-        yield [__DIR__.'/Fixtures/SkipNonThrowable.php', []];
     }
 
-    /**
-     * @return list<string>
-     */
-    public static function getAdditionalConfigFiles(): array
+    protected static function directory(): string
     {
-        return [__DIR__.'/config/configured_rule.neon'];
-    }
-
-    protected function getRule(): Rule
-    {
-        return self::getContainer()->getByType(ExceptionMustImplementNativeThrowableRule::class);
+        return __DIR__;
     }
 }

@@ -1,7 +1,7 @@
 includes:
     - baselines/loader.neon
 #    - phpstan-baseline.neon
-    - config/rules.neon
+    - config/extension.neon
 
     - vendor/spaze/phpstan-disallowed-calls/disallowed-dangerous-calls.neon
     - vendor/spaze/phpstan-disallowed-calls/disallowed-execution-calls.neon
@@ -60,6 +60,8 @@ parameters:
         noParameterWithNullDefaultValue:
             enabled: false
         noConstructorParameterWithDefaultValue:
+            enabled: false
+        noExtends:
             enabled: false
     guanguans:
         exceptionMustImplementNativeThrowable:
@@ -134,6 +136,7 @@ parameters:
 #        - identifier: trait.unused
 #        - identifier: typePerfect.noMixedMethodCaller
 
+        - identifier: symplify.forbiddenStaticClassConstFetch
         - identifier: argument.type
 #        - identifier: cast.int
 #        - identifier: cast.string
@@ -142,7 +145,7 @@ parameters:
         - identifier: return.type
         - identifier: phpstanApi.runtimeReflection
         - identifier: phpstanApi.method
-        - identifier: symplify.explicitInterfaceSuffixName
+#        - identifier: symplify.explicitInterfaceSuffixName
 #        - identifier: symplify.forbiddenArrayMethodCall
         - identifier: symplify.forbiddenNode
 #        - identifier: symplify.forbiddenStaticClassConstFetch

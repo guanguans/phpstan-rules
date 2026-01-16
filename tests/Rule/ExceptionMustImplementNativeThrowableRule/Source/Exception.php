@@ -13,6 +13,4 @@ declare(strict_types=1);
 
 namespace Guanguans\PHPStanRulesTests\Rule\ExceptionMustImplementNativeThrowableRule\Source;
 
-use Guanguans\PHPStanRules\Contract\ThrowableContract;
-
 class Exception extends \Exception implements ThrowableContract {}
