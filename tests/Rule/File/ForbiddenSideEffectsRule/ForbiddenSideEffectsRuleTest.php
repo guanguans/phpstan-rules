@@ -23,7 +23,6 @@ namespace Guanguans\PHPStanRulesTests\Rule\File\ForbiddenSideEffectsRule;
 use Guanguans\PHPStanRulesTests\Rule\AbstractRuleTestCase;
 
 /**
- * @covers \Guanguans\PHPStanRules\Rule\AbstractRule
  * @covers \Guanguans\PHPStanRules\Rule\File\ForbiddenSideEffectsRule
  */
 final class ForbiddenSideEffectsRuleTest extends AbstractRuleTestCase

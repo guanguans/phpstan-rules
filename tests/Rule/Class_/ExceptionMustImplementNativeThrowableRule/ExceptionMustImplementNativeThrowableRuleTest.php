@@ -24,6 +24,8 @@ use Guanguans\PHPStanRulesTests\Rule\AbstractRuleTestCase;
 use Guanguans\PHPStanRulesTests\Rule\Class_\ExceptionMustImplementNativeThrowableRule\Fixtures\NonImplementedNativeThrowableException;
 
 /**
+ * @covers \Guanguans\PHPStanRules\Rule\AbstractMixedTypeRule
+ * @covers \Guanguans\PHPStanRules\Rule\AbstractRule
  * @covers \Guanguans\PHPStanRules\Rule\Class_\ExceptionMustImplementNativeThrowableRule
  */
 final class ExceptionMustImplementNativeThrowableRuleTest extends AbstractRuleTestCase

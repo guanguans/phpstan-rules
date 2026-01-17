@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Guanguans\PHPStanRules\Rule\Class_;
 
-use Guanguans\PHPStanRules\Rule\AbstractRule;
+use Guanguans\PHPStanRules\Rule\AbstractMixedTypeRule;
 use PhpParser\Node;
 use PhpParser\Node\Expr\New_;
 use PhpParser\Node\Identifier;
@@ -29,9 +29,9 @@ use PHPStan\Rules\RuleErrorBuilder;
  * @see https://github.com/symfony/ai/blob/main/.phpstan/ForbidNativeExceptionRule.php
  * @see https://github.com/thecodingmachine/phpstan-strict-rules/tree/master/src/Rules/Exceptions/
  *
- * @extends AbstractRule<Class_|New_>
+ * @extends AbstractMixedTypeRule<Class_|New_>
  */
-final class ExceptionMustImplementNativeThrowableRule extends AbstractRule
+final class ExceptionMustImplementNativeThrowableRule extends AbstractMixedTypeRule
 {
     private string $nativeThrowable;
 
@@ -44,9 +44,12 @@ final class ExceptionMustImplementNativeThrowableRule extends AbstractRule
         $this->nativeThrowable = $nativeThrowable;
     }
 
-    public function getNodeType(): string
+    protected function getNodeTypes(): array
     {
-        return Node::class;
+        return [
+            Class_::class,
+            New_::class,
+        ];
     }
 
     /**
@@ -54,7 +57,7 @@ final class ExceptionMustImplementNativeThrowableRule extends AbstractRule
      *
      * @throws \PHPStan\ShouldNotHappenException
      */
-    public function processNode(Node $node, Scope $scope): array
+    protected function rawProcessNode(Node $node, Scope $scope): array
     {
         /** @var list<null|Identifier|Name> $classNameNodes */
         $classNameNodes = [];
@@ -65,10 +68,6 @@ final class ExceptionMustImplementNativeThrowableRule extends AbstractRule
 
         if ($node instanceof New_ && $node->class instanceof Name) {
             $classNameNodes = array_merge($classNameNodes, [$node->class]);
-        }
-
-        if ([] === $classNameNodes) {
-            return [];
         }
 
         return array_reduce(
