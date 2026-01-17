@@ -2,7 +2,7 @@
 # https://github.com/symplify/phpstan-rules/tree/main/config/
 
 conditionalTags:
-    Guanguans\PHPStanRules\Rule\New_\ExceptionMustImplementNativeThrowableRule:
+    Guanguans\PHPStanRules\Rule\Class_\ExceptionMustImplementNativeThrowableRule:
         phpstan.rules.rule: %guanguans.exceptionMustImplementNativeThrowable.enabled%
     Guanguans\PHPStanRules\Rule\File\ForbiddenSideEffectsRule:
         phpstan.rules.rule: %guanguans.forbiddenSideEffects.enabled%
@@ -33,7 +33,7 @@ services:
         class: staabm\SideEffectsDetector\SideEffectsDetector
 
     -
-        class: Guanguans\PHPStanRules\Rule\New_\ExceptionMustImplementNativeThrowableRule
+        class: Guanguans\PHPStanRules\Rule\Class_\ExceptionMustImplementNativeThrowableRule
         arguments:
             nativeThrowable: %guanguans.exceptionMustImplementNativeThrowable.nativeThrowable%
     -

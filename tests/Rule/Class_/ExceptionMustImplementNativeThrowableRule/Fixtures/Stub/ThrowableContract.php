@@ -1,6 +1,5 @@
 <?php
 
-/** @noinspection ALL */
 declare(strict_types=1);
 
 /**
@@ -12,12 +11,6 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/phpstan-rules
  */
 
-namespace Guanguans\PHPStanRulesTests\Rule\New_\ExceptionMustImplementNativeThrowableRule\Fixtures;
+namespace Guanguans\PHPStanRulesTests\Rule\Class_\ExceptionMustImplementNativeThrowableRule\Fixtures\Stub;
 
-final class ExceptionMustImplementNativeThrowable
-{
-    public function run(): void
-    {
-        throw new \Exception(fake()->text());
-    }
-}
+interface ThrowableContract extends \Throwable {}

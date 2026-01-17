@@ -46,7 +46,7 @@ if (!\function_exists('Guanguans\PHPStanRules\Support\classes')) {
      * @throws \ErrorException
      * @throws \ReflectionException
      *
-     * @return \Illuminate\Support\Collection<class-string<TObject>, \ReflectionClass<TObject>|\Throwable>
+     * @return \Illuminate\Support\Collection<class-string<TObject>, \ReflectionClass<TObject>>
      *
      * @noinspection PhpUndefinedNamespaceInspection
      */

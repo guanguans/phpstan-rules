@@ -66,8 +66,7 @@ return RectorConfig::configure()
     ])
     ->withRootFiles()
     ->withSkip([
-        '**/Fixtures/*',
-        '**/Source/*',
+        '*/Fixtures/*',
         __DIR__.'/_ide_helper.php',
         // __DIR__.'/tests.php',
     ])

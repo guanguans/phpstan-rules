@@ -1,7 +1,7 @@
 includes:
     - baselines/loader.neon
 #    - phpstan-baseline.neon
-    - config/extension.neon
+    - config/rules.neon
 
     - vendor/spaze/phpstan-disallowed-calls/disallowed-dangerous-calls.neon
     - vendor/spaze/phpstan-disallowed-calls/disallowed-execution-calls.neon
@@ -138,21 +138,13 @@ parameters:
 #        - identifier: trait.unused
 #        - identifier: typePerfect.noMixedMethodCaller
 
-        - identifier: symplify.forbiddenStaticClassConstFetch
         - identifier: argument.type
-#        - identifier: cast.int
-#        - identifier: cast.string
-#        - identifier: encapsedStringPart.nonString
-#        - identifier: method.childParameterType
-        - identifier: return.type
-        - identifier: phpstanApi.runtimeReflection
         - identifier: phpstanApi.method
-#        - identifier: symplify.explicitInterfaceSuffixName
-#        - identifier: symplify.forbiddenArrayMethodCall
+        - identifier: return.type
+        - identifier: shipmonk.checkedExceptionInCallable
+        - identifier: shipmonk.stringInterpolationWithNull
         - identifier: symplify.forbiddenNode
-#        - identifier: symplify.forbiddenStaticClassConstFetch
-#        - identifier: symplify.noArrayMapWithArrayCallable
-#        - message: '#^Unused Guanguans\\PHPStanRules\\Rector\\.*\\.*\:\:__construct$#'
+#        - message: '#^Cognitive complexity for "Guanguans\\PHPStanRules\\Rule\\.*\\.*Rule\:\:processNode\(\)" is 1[0-0], keep it under 8$#'
 
         -
             identifier: rector.noClassReflectionStaticReflection

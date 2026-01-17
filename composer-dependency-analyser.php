@@ -37,27 +37,17 @@ return (new Configuration)
     )
     ->ignoreErrorsOnPackages(
         [
-            // 'illuminate/support',
+            /**
+             * @see https://github.com/phpstan/phpstan-src/tree/2.1.x/build/
+             * @see vendor/phpstan/phpstan/phpstan.phar/vendor/
+             */
+            'illuminate/collections',
+            'nikic/php-parser',
         ],
-        [ErrorType::UNUSED_DEPENDENCY]
+        [ErrorType::SHADOW_DEPENDENCY]
     )
     ->ignoreErrorsOnPackageAndPath(
         'staabm/side-effects-detector',
         __DIR__.'/src/Rule/File/ForbiddenSideEffectsRule.php',
         [ErrorType::DEV_DEPENDENCY_IN_PROD]
-    )
-    ->ignoreErrorsOnPackages(
-        [
-            /**
-             * @see https://github.com/phpstan/phpstan-src/tree/2.1.x/build/
-             * @see vendor/phpstan/phpstan/phpstan.phar/vendor/symfony/
-             */
-            'illuminate/collections',
-            // 'rector/rector',
-            // 'symfony/polyfill-php80',
-            // 'symfony/polyfill-php81',
-            // 'webmozart/assert',
-            'nikic/php-parser',
-        ],
-        [ErrorType::SHADOW_DEPENDENCY]
     );

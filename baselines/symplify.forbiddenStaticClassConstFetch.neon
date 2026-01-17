@@ -1,0 +1,8 @@
+# total 1 error
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Avoid static access of constants, as they can change value\. Use interface and contract method instead$#'
+            count: 1
+            path: ../src/Rule/AbstractRule.php

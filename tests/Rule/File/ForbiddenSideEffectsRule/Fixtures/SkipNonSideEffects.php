@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Guanguans\PHPStanRulesTests\Rule\File\ForbiddenSideEffectsRule\Fixtures;
 
-final class SkipImplemented
+final class SkipNonSideEffects
 {
     public function run(): void {}
 }

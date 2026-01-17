@@ -18,10 +18,14 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/phpstan-rules
  */
 
-namespace Guanguans\PHPStanRulesTests\Rule\New_\ExceptionMustImplementNativeThrowableRule;
+namespace Guanguans\PHPStanRulesTests\Rule\Class_\ExceptionMustImplementNativeThrowableRule;
 
 use Guanguans\PHPStanRulesTests\Rule\AbstractRuleTestCase;
+use Guanguans\PHPStanRulesTests\Rule\Class_\ExceptionMustImplementNativeThrowableRule\Fixtures\NonImplementedNativeThrowableException;
 
+/**
+ * @covers \Guanguans\PHPStanRules\Rule\Class_\ExceptionMustImplementNativeThrowableRule
+ */
 final class ExceptionMustImplementNativeThrowableRuleTest extends AbstractRuleTestCase
 {
     /**
@@ -30,7 +34,14 @@ final class ExceptionMustImplementNativeThrowableRuleTest extends AbstractRuleTe
     public static function provideRuleCases(): iterable
     {
         yield [__DIR__.'/Fixtures/ExceptionMustImplementNativeThrowable.php', [
-            [self::invokeRuleErrorMessageMethod(\Exception::class), 21],
+            [self::invokeRuleErrorMessageMethod(\RuntimeException::class), 21],
+            [self::invokeRuleErrorMessageMethod(NonImplementedNativeThrowableException::class), 22],
+            [self::invokeRuleErrorMessageMethod(NonImplementedNativeThrowableException::class), 23],
+            [self::invokeRuleErrorMessageMethod(NonImplementedNativeThrowableException::class), 24],
+        ]];
+
+        yield [__DIR__.'/Fixtures/NonImplementedNativeThrowableException.php', [
+            [self::invokeRuleErrorMessageMethod(NonImplementedNativeThrowableException::class), 16],
         ]];
     }
 

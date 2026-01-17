@@ -138,6 +138,11 @@
             "pre-commit": [
                 "composer checks:required"
             ]
+        },
+        "phpstan": {
+            "includes": [
+                "config/rules.neon"
+            ]
         }
     },
     "scripts": {
@@ -176,8 +181,6 @@
             "@jsonlint",
             "@phpmnd",
             "@phpstan:analyse",
-            "@phpstan-rules:fix-neon-files",
-            "@phpstan-rules:list-files",
             "@rector:process-dry-run",
             "@sk:check-commented-code",
             "@sk:check-conflicts",
@@ -200,6 +203,8 @@
         "checks:required": [
             "@putenv:xdebug-off",
             "@php-cs-fixer:fix-dry-run",
+            "@phpstan-rules:fix-neon-files",
+            "@phpstan-rules:list-files",
             "@pest"
         ],
         "class-leak": "@php vendor/bin/class-leak --ansi -vv",

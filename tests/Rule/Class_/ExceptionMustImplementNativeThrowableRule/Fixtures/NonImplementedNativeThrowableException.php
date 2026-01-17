@@ -11,6 +11,6 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/phpstan-rules
  */
 
-namespace Guanguans\PHPStanRulesTests\Rule\New_\ExceptionMustImplementNativeThrowableRule\Source;
+namespace Guanguans\PHPStanRulesTests\Rule\Class_\ExceptionMustImplementNativeThrowableRule\Fixtures;
 
-class Exception extends \Exception implements ThrowableContract {}
+class NonImplementedNativeThrowableException extends \RuntimeException {}

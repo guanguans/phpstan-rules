@@ -21,21 +21,31 @@
 composer require guanguans/phpstan-rules --dev --ansi -v
 ```
 
+If you also install [phpstan/extension-installer](https://github.com/phpstan/extension-installer) then you're all set!
+
+<details>
+<summary>Manual installation</summary>
+
+If you don't want to use `phpstan/extension-installer`, include rules.neon in your project's PHPStan config:
+
+```neon
+includes:
+    - vendor/guanguans/phpstan-rules/config/rules.neon
+```
+</details>
+
 ## Usage
 
-### :monocle_face: [Rules Overview](docs/rules-overview.md)
+Parameter configuration refer to the parameter section the configuration file [[config/rules.neon](config/rules.neon)].
 
-### In your rector configuration register rules
-
-```php
-<?php
-```
+You can also refer to the configuration file [tests/Rule/.../.../config/configured_rule.neon] in the tests directory.
 
 ## Composer scripts
 
 ```shell
 composer checks:required
 composer php-cs-fixer:fix
+composer phpstan-rules:fix-neon-files
 composer test
 ```
 

@@ -1,5 +1,7 @@
-# total 5 errors
+# total 8 errors
 
 includes:
-    - shipmonk.checkedExceptionInCallable.neon
+    - phpstanApi.runtimeReflection.neon
+    - rector.noInstanceOfStaticReflection.neon
     - symplify.forbiddenFuncCall.neon
+    - symplify.forbiddenStaticClassConstFetch.neon
