@@ -1,20 +1,8 @@
 # https://github.com/ergebnis/phpstan-rules/blob/main/rules.neon
 # https://github.com/symplify/phpstan-rules/tree/main/config/
 
-conditionalTags:
-    Guanguans\PHPStanRules\Rule\Class_\ExceptionMustImplementNativeThrowableRule:
-        phpstan.rules.rule: %guanguans.exceptionMustImplementNativeThrowable.enabled%
-    Guanguans\PHPStanRules\Rule\File\ForbiddenSideEffectsRule:
-        phpstan.rules.rule: %guanguans.forbiddenSideEffects.enabled%
-
-parameters:
-    guanguans:
-        allRules: true
-        exceptionMustImplementNativeThrowable:
-            nativeThrowable: \Throwable
-            enabled: %guanguans.allRules%
-        forbiddenSideEffects:
-            enabled: false
+includes:
+    - rules.php
 
 parametersSchema:
     guanguans: structure([
@@ -28,13 +16,27 @@ parametersSchema:
         ])
     ])
 
-services:
-    -
-        class: staabm\SideEffectsDetector\SideEffectsDetector
+parameters:
+    guanguans:
+        allRules: true
+        exceptionMustImplementNativeThrowable:
+            nativeThrowable: \Throwable
+            enabled: %guanguans.allRules%
+        forbiddenSideEffects:
+            enabled: %guanguans.allRules%
 
+conditionalTags:
+    Guanguans\PHPStanRules\Rule\Class_\ExceptionMustImplementNativeThrowableRule:
+        phpstan.rules.rule: %guanguans.exceptionMustImplementNativeThrowable.enabled%
+#    Guanguans\PHPStanRules\Rule\File\ForbiddenSideEffectsRule:
+#        phpstan.rules.rule: %guanguans.forbiddenSideEffects.enabled%
+
+services:
     -
         class: Guanguans\PHPStanRules\Rule\Class_\ExceptionMustImplementNativeThrowableRule
         arguments:
             nativeThrowable: %guanguans.exceptionMustImplementNativeThrowable.nativeThrowable%
-    -
-        class: Guanguans\PHPStanRules\Rule\File\ForbiddenSideEffectsRule
+#    -
+#        class: staabm\SideEffectsDetector\SideEffectsDetector
+#    -
+#        class: Guanguans\PHPStanRules\Rule\File\ForbiddenSideEffectsRule

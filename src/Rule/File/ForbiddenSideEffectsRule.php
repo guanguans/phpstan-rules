@@ -31,9 +31,11 @@ use staabm\SideEffectsDetector\SideEffectsDetector;
  */
 final class ForbiddenSideEffectsRule extends AbstractRule
 {
+    /** @see \staabm\SideEffectsDetector\SideEffect */
     private const IGNORED_SIDE_EFFECTS = [
         'maybe_has_side_effects',
         'scope_pollution',
+        // 'unknown_class',
     ];
     private SideEffectsDetector $sideEffectsDetector;
 

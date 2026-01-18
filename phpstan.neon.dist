@@ -37,6 +37,7 @@ parameters:
     scanFiles:
         - vendor/composer/InstalledVersions.php
     excludePaths:
+#        - src/Rule/File/ForbiddenSideEffectsRule.php
         - src/Support/ComposerScripts.php
         - tests/Fixtures/
     tmpDir: .build/phpstan/
