@@ -14,10 +14,15 @@ declare(strict_types=1);
 namespace Guanguans\PHPStanRules\Rule;
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Stringable;
 use PhpParser\Node;
 use PHPStan\Rules\Rule;
 
 /**
+ * @see https://github.com/phpstan/phpstan-strict-rules
+ * @see https://github.com/symplify/phpstan-rules
+ * @see https://github.com/ergebnis/phpstan-rules
+ *
  * @template TNodeType of Node
  *
  * @implements Rule<TNodeType>
@@ -30,7 +35,7 @@ abstract class AbstractRule implements Rule
             ->afterLast('\\')
             ->beforeLast('Rule')
             // ->lcfirst()
-            ->camel()
+            ->pipe(static fn (Stringable $stringable): string => lcfirst((string) $stringable))
             ->prepend('guanguans', '.');
     }
 }

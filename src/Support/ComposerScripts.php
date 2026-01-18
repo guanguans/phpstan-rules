@@ -45,9 +45,8 @@ final class ComposerScripts
     private function __construct() {}
 
     /**
-     * @see vendor/phpstan/phpstan/phpstan.phar/preload.php
-     *
-     * @throws \ErrorException
+     * @throws \ErrorException*@see vendor/phpstan/phpstan/phpstan.phar/preload.php
+     * @throws \ReflectionException
      *
      * @return int<0>|never-returns<1>
      *

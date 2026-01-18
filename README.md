@@ -36,9 +36,9 @@ includes:
 
 ## Usage
 
-Parameter configuration refer to the parameter section the configuration file [[config/rules.neon](config/rules.neon)].
+Parameter configuration refer to the parameter section the configuration file [[`config/rules.neon`](config/rules.neon)].
 
-You can also refer to the configuration file [tests/Rule/.../.../config/configured_rule.neon] in the tests directory.
+You can also refer to the configuration file [`tests/Rule/.../.../config/configured_rule.neon`] in the tests directory.
 
 ## Composer scripts
 

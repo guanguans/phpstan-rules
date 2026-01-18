@@ -23,7 +23,7 @@ use function Guanguans\PHPStanRules\Support\is_instance_of_any;
  *
  * @extends AbstractRule<Node>
  */
-abstract class AbstractMixedTypeRule extends AbstractRule
+abstract class AbstractMixedNodeTypeRule extends AbstractRule
 {
     /**
      * @return class-string<TNodeType>

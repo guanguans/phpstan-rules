@@ -50,6 +50,14 @@ abstract class AbstractRuleTestCase extends RuleTestCase
         $this->analyse(glob(static::directory().'/Fixtures/Skip*.php'), []);
     }
 
+    final public function testRuleConstructor(): void
+    {
+        self::assertInstanceOf(
+            static::ruleClass(),
+            static::ruleReflectionClass()->newInstanceArgs(static::ruleParameters())
+        );
+    }
+
     final public function testRuleBasicInformation(): void
     {
         self::assertTrue(is_subclass_of(static::ruleClass(), AbstractRule::class));
@@ -82,6 +90,37 @@ abstract class AbstractRuleTestCase extends RuleTestCase
     protected static function rawGetRule(): AbstractRule
     {
         return static::getContainer()->getByType(static::ruleClass());
+    }
+
+    /**
+     * @throws \PHPStan\DependencyInjection\MissingServiceException
+     * @throws \PHPStan\DependencyInjection\ParameterNotFoundException
+     * @throws \ReflectionException
+     *
+     * @return array<string, mixed>
+     */
+    protected static function ruleParameters(): array
+    {
+        [$namespace, $name] = explode('.', static::invokeRuleMethod('identifier'), 2);
+        $rawParameters = static::getContainer()->getParameter($namespace)[$name];
+
+        return array_reduce(
+            static::ruleReflectionClass()->getConstructor()->getParameters(),
+            function (array $parameters, \ReflectionParameter $reflectionParameter) use ($rawParameters): array {
+                $parameterName = $reflectionParameter->getName();
+
+                if (class_exists($typeName = $reflectionParameter->getType()->getName())) {
+                    $parameters[$parameterName] = static::getContainer()->getByType($typeName);
+                } elseif (isset($rawParameters[$parameterName])) {
+                    $parameters[$parameterName] = $rawParameters[$parameterName];
+                } elseif ($reflectionParameter->isDefaultValueAvailable()) {
+                    $parameters[$parameterName] = $reflectionParameter->getDefaultValue();
+                }
+
+                return $parameters;
+            },
+            []
+        );
     }
 
     protected static function invokeRuleErrorMessageMethod(...$args)

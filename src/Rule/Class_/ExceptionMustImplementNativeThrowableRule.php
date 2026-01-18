@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Guanguans\PHPStanRules\Rule\Class_;
 
-use Guanguans\PHPStanRules\Rule\AbstractMixedTypeRule;
+use Guanguans\PHPStanRules\Rule\AbstractMixedNodeTypeRule;
 use PhpParser\Node;
 use PhpParser\Node\Expr\New_;
 use PhpParser\Node\Identifier;
@@ -29,9 +29,9 @@ use PHPStan\Rules\RuleErrorBuilder;
  * @see https://github.com/symfony/ai/blob/main/.phpstan/ForbidNativeExceptionRule.php
  * @see https://github.com/thecodingmachine/phpstan-strict-rules/tree/master/src/Rules/Exceptions/
  *
- * @extends AbstractMixedTypeRule<Class_|New_>
+ * @extends AbstractMixedNodeTypeRule<Class_|New_>
  */
-final class ExceptionMustImplementNativeThrowableRule extends AbstractMixedTypeRule
+final class ExceptionMustImplementNativeThrowableRule extends AbstractMixedNodeTypeRule
 {
     private string $nativeThrowable;
 

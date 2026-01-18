@@ -8,12 +8,15 @@
         "mrpunyapal/rector-pest": "^0.1",
         "nicksdot/phpstan-phpstorm-error-identifiers": "^0.2",
         "peckphp/peck": "^0.2",
+        "peststan/peststan": "^0.0",
         "phpro/grumphp-shim": "^2.18",
         "phpstan/phpstan": "^2.1",
         "roave/backward-compatibility-check": "^8.14",
         "roave/no-floaters": "^1.13",
         "sidz/phpstan-rules": "^0.5"
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "config": {
         "allow-plugins": {
             "ergebnis/composer-normalize": true,
