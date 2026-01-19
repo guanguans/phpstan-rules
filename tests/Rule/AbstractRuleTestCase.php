@@ -69,6 +69,16 @@ abstract class AbstractRuleTestCase extends RuleTestCase
         ));
     }
 
+    final public function testRuleTestCaseClassName(): void
+    {
+        self::assertSame(
+            static::class,
+            (string) Str::of(static::ruleClass())
+                ->replace('PHPStanRules', 'PHPStanRulesTests')
+                ->append('\\', static::ruleReflectionClass()->getShortName(), 'Test')
+        );
+    }
+
     /**
      * @return list<string>
      */
