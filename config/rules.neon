@@ -25,12 +25,6 @@ parameters:
         forbiddenSideEffects:
             enabled: %guanguans.allRules%
 
-conditionalTags:
-    Guanguans\PHPStanRules\Rule\Class_\ExceptionMustImplementNativeThrowableRule:
-        phpstan.rules.rule: %guanguans.exceptionMustImplementNativeThrowable.enabled%
-#    Guanguans\PHPStanRules\Rule\File\ForbiddenSideEffectsRule:
-#        phpstan.rules.rule: %guanguans.forbiddenSideEffects.enabled%
-
 services:
     -
         class: Guanguans\PHPStanRules\Rule\Class_\ExceptionMustImplementNativeThrowableRule
@@ -40,3 +34,9 @@ services:
 #        class: staabm\SideEffectsDetector\SideEffectsDetector
 #    -
 #        class: Guanguans\PHPStanRules\Rule\File\ForbiddenSideEffectsRule
+
+conditionalTags:
+    Guanguans\PHPStanRules\Rule\Class_\ExceptionMustImplementNativeThrowableRule:
+        phpstan.rules.rule: %guanguans.exceptionMustImplementNativeThrowable.enabled%
+#    Guanguans\PHPStanRules\Rule\File\ForbiddenSideEffectsRule:
+#        phpstan.rules.rule: %guanguans.forbiddenSideEffects.enabled%

@@ -37,7 +37,7 @@
 /baselines/    export-ignore
 #/docs/         export-ignore
 #/examples/     export-ignore
-/stubs/        export-ignore
+/stub/         export-ignore
 /tests/        export-ignore
 /vendor-bin/   export-ignore
 /vendor/       export-ignore

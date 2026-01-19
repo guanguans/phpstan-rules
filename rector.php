@@ -203,6 +203,7 @@ return RectorConfig::configure()
             __DIR__.'/src/Rule/*Rule.php',
         ],
         SortAssociativeArrayByKeyRector::class => [
+            __DIR__.'/config/',
             __DIR__.'/src/',
             __DIR__.'/tests/',
         ],

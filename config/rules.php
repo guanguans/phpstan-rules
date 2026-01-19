@@ -19,17 +19,17 @@ if (!class_exists(SideEffectsDetector::class)) {
 }
 
 return [
-    'conditionalTags' => [
-        ForbiddenSideEffectsRule::class => [
-            'phpstan.rules.rule' => '%guanguans.forbiddenSideEffects.enabled%',
-        ],
-    ],
     'services' => [
         [
             'class' => SideEffectsDetector::class,
         ],
         [
             'class' => ForbiddenSideEffectsRule::class,
+        ],
+    ],
+    'conditionalTags' => [
+        ForbiddenSideEffectsRule::class => [
+            'phpstan.rules.rule' => '%guanguans.forbiddenSideEffects.enabled%',
         ],
     ],
 ];

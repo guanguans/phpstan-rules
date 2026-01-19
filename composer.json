@@ -103,7 +103,10 @@
     "autoload-dev": {
         "psr-4": {
             "Guanguans\\PHPStanRulesTests\\": "tests/"
-        }
+        },
+        "classmap": [
+            "stub/"
+        ]
     },
     "config": {
         "allow-plugins": {
@@ -400,7 +403,7 @@
         "rector:process-only-dry-run": "@rector:process-only --dry-run",
         "roave-backward-compatibility-check": [
             "@putenv:php",
-            "$PHP82 vendor/bin/roave-backward-compatibility-check --ansi -vv"
+            "$PHP82 vendor/bin/roave-backward-compatibility-check --install-development-dependencies --ansi -vv"
         ],
         "roave-backward-compatibility-check:format-github-actions": "@roave-backward-compatibility-check --format=github-actions",
         "rule-doc-generator": [
