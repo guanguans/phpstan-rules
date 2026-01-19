@@ -8,6 +8,15 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.0.2"></a>
+## [1.0.2] - 2026-01-19
+### ✨ Features
+- **rules:** Add configuration for ForbiddenSideEffectsRule ([08bf5a3](https://github.com/guanguans/phpstan-rules/commit/08bf5a3))
+
+### 🐞 Bug Fixes
+- Add classmap autoloading and create Rule interface for PHPStan ([3ad2c55](https://github.com/guanguans/phpstan-rules/commit/3ad2c55))
+
+
 <a name="1.0.1"></a>
 ## [1.0.1] - 2026-01-18
 ### ✨ Features
@@ -33,5 +42,6 @@ All notable changes to this project will be documented in this file.
 - **dependencies:** Add new PHPStan rules and no-floaters package ([c702a5b](https://github.com/guanguans/phpstan-rules/commit/c702a5b))
 
 
-[Unreleased]: https://github.com/guanguans/phpstan-rules/compare/1.0.1...HEAD
+[Unreleased]: https://github.com/guanguans/phpstan-rules/compare/1.0.2...HEAD
+[1.0.2]: https://github.com/guanguans/phpstan-rules/compare/1.0.1...1.0.2
 [1.0.1]: https://github.com/guanguans/phpstan-rules/compare/1.0.0...1.0.1
