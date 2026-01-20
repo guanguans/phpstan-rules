@@ -26,6 +26,7 @@ use staabm\SideEffectsDetector\SideEffectsDetector;
 /**
  * @see \Guanguans\PHPStanRulesTests\Rule\File\ForbiddenSideEffectsRule\ForbiddenSideEffectsRuleTest
  * @see https://github.com/staabm/side-effects-detector
+ * @see \Rector\DeadCode\SideEffect\
  *
  * @extends AbstractRule<FileNode>
  */
