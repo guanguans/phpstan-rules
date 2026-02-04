@@ -8,6 +8,21 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.0.3"></a>
+## [1.0.3] - 2026-02-05
+### 🐞 Bug Fixes
+- **ExceptionMustImplementNativeThrowableRule:** Improve type assertion for nativeThrowable ([17d8273](https://github.com/guanguans/phpstan-rules/commit/17d8273))
+
+### 💅 Code Refactorings
+- apply rector ([eaa34e0](https://github.com/guanguans/phpstan-rules/commit/eaa34e0))
+
+### ✅ Tests
+- **tests:** Add test for rule class name consistency ([9048389](https://github.com/guanguans/phpstan-rules/commit/9048389))
+
+### 📦 Builds
+- **dependencies:** Update composer dependencies to latest versions ([30334a2](https://github.com/guanguans/phpstan-rules/commit/30334a2))
+
+
 <a name="1.0.2"></a>
 ## [1.0.2] - 2026-01-19
 ### ✨ Features
@@ -42,6 +57,7 @@ All notable changes to this project will be documented in this file.
 - **dependencies:** Add new PHPStan rules and no-floaters package ([c702a5b](https://github.com/guanguans/phpstan-rules/commit/c702a5b))
 
 
-[Unreleased]: https://github.com/guanguans/phpstan-rules/compare/1.0.2...HEAD
+[Unreleased]: https://github.com/guanguans/phpstan-rules/compare/1.0.3...HEAD
+[1.0.3]: https://github.com/guanguans/phpstan-rules/compare/1.0.2...1.0.3
 [1.0.2]: https://github.com/guanguans/phpstan-rules/compare/1.0.1...1.0.2
 [1.0.1]: https://github.com/guanguans/phpstan-rules/compare/1.0.0...1.0.1
