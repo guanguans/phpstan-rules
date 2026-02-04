@@ -40,7 +40,7 @@ final class ExceptionMustImplementNativeThrowableRule extends AbstractMixedNodeT
      */
     public function __construct(string $nativeThrowable)
     {
-        \assert(is_subclass_of($nativeThrowable, \Throwable::class));
+        \assert(is_a($nativeThrowable, \Throwable::class, true));
         $this->nativeThrowable = $nativeThrowable;
     }
 

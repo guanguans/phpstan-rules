@@ -4,10 +4,10 @@ parameters:
     ignoreErrors:
         -
             message: '#^Function is_a\(\) is a runtime reflection concept that might not work in PHPStan because it uses fully static reflection engine\. Use objects retrieved from ReflectionProvider instead\.$#'
-            count: 1
+            count: 2
             path: ../src/Rule/Class_/ExceptionMustImplementNativeThrowableRule.php
 
         -
             message: '#^Function is_subclass_of\(\) is a runtime reflection concept that might not work in PHPStan because it uses fully static reflection engine\. Use objects retrieved from ReflectionProvider instead\.$#'
-            count: 3
+            count: 2
             path: ../src/Rule/Class_/ExceptionMustImplementNativeThrowableRule.php
