@@ -18,10 +18,7 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/phpstan-rules
  */
 
-use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 use Rector\PhpParser\Parser\SimplePhpParser;
-use function Guanguans\PHPStanRules\Support\classes;
 use function Guanguans\PHPStanRules\Support\clone_node;
 use function Guanguans\PHPStanRules\Support\is_class_of_all;
 use function Guanguans\PHPStanRules\Support\is_class_of_any;
@@ -29,17 +26,6 @@ use function Guanguans\PHPStanRules\Support\is_instance_of_all;
 use function Guanguans\PHPStanRules\Support\is_instance_of_any;
 use function Guanguans\PHPStanRules\Support\is_subclass_of_all;
 use function Guanguans\PHPStanRules\Support\is_subclass_of_any;
-
-it('will throw `ReflectionException` when call classes function', function (): void {
-    classes(fn (string $class): bool => Str::of($class)->startsWith('Illuminate\Support'));
-})
-    ->group(__DIR__, __FILE__)
-    ->throws(ReflectionException::class);
-
-it('can get classes', function (): void {
-    expect(classes(fn (string $class): bool => Str::of($class)->startsWith(Str::class)))
-        ->toBeInstanceOf(Collection::class);
-})->group(__DIR__, __FILE__);
 
 it('can deep clone node', function (): void {
     $node = (new SimplePhpParser)->parseFile(__FILE__)[0];

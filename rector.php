@@ -19,9 +19,8 @@ declare(strict_types=1);
 use Ergebnis\Rector\Rules\Arrays\SortAssociativeArrayByKeyRector;
 use Guanguans\RectorRules\Rector\Array_\SortListItemOfSameScalarTypeRector;
 use Guanguans\RectorRules\Rector\File\AddNoinspectionDocblockToFileFirstStmtRector;
-use Guanguans\RectorRules\Rector\Name\RenameToPsrNameRector;
+use Guanguans\RectorRules\Rector\Name\RenameToConventionalCaseNameRector;
 use Guanguans\RectorRules\Rector\New_\NewExceptionToNewAnonymousExtendsExceptionImplementsRector;
-use Illuminate\Support\Str;
 use PhpParser\NodeVisitor\ParentConnectingVisitor;
 use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
 use Rector\CodeQuality\Rector\LogicalAnd\LogicalToBooleanRector;
@@ -44,18 +43,10 @@ use Rector\EarlyReturn\Rector\Return_\ReturnBinaryOrToEarlyReturnRector;
 use Rector\Naming\Rector\ClassMethod\RenameParamToMatchTypeRector;
 use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
-use Rector\Renaming\Rector\FuncCall\RenameFunctionRector;
 use Rector\Set\ValueObject\DowngradeLevelSetList;
 use Rector\Set\ValueObject\SetList;
-use Rector\Transform\Rector\FuncCall\FuncCallToStaticCallRector;
-use Rector\Transform\Rector\StaticCall\StaticCallToFuncCallRector;
-use Rector\Transform\ValueObject\FuncCallToStaticCall;
-use Rector\Transform\ValueObject\StaticCallToFuncCall;
+use Rector\Transform\Rector\Scalar\ScalarValueToConstFetchRector;
 use Rector\ValueObject\PhpVersion;
-use Rector\ValueObject\Visibility;
-use Rector\Visibility\Rector\ClassMethod\ChangeMethodVisibilityRector;
-use Rector\Visibility\ValueObject\ChangeMethodVisibility;
-use function Guanguans\PHPStanRules\Support\classes;
 
 return RectorConfig::configure()
     ->withPaths([
@@ -138,7 +129,7 @@ return RectorConfig::configure()
     ])
     // ->withConfiguredRule(NewExceptionToNewAnonymousExtendsExceptionImplementsRector::class, [ThrowableContract::class])
     ->registerDecoratingNodeVisitor(ParentConnectingVisitor::class)
-    ->withConfiguredRule(RenameToPsrNameRector::class, [
+    ->withConfiguredRule(RenameToConventionalCaseNameRector::class, [
         'MIT',
     ])
     // ->withConfiguredRule(SortListItemOfSameScalarTypeRector::class, [
@@ -152,35 +143,6 @@ return RectorConfig::configure()
         'phpstan-ignore-next-line',
         'psalm-suppress',
     ])
-    ->withConfiguredRule(StaticCallToFuncCallRector::class, [
-        // new StaticCallToFuncCall(Str::class, 'of', 'str'),
-    ])
-    ->withConfiguredRule(FuncCallToStaticCallRector::class, [
-        new FuncCallToStaticCall('str', Str::class, 'of'),
-    ])
-    ->withConfiguredRule(
-        ChangeMethodVisibilityRector::class,
-        classes(static fn (string $class, string $file): bool => str_starts_with($class, 'Guanguans\PHPStanRules'))
-            ->filter(static fn (ReflectionClass $reflectionClass): bool => $reflectionClass->isTrait())
-            ->map(
-                static fn (ReflectionClass $reflectionClass): array => collect($reflectionClass->getMethods(ReflectionMethod::IS_PRIVATE))
-                    ->reject(static fn (ReflectionMethod $reflectionMethod): bool => $reflectionMethod->isFinal() || $reflectionMethod->isInternal())
-                    ->map(static fn (ReflectionMethod $reflectionMethod): ChangeMethodVisibility => new ChangeMethodVisibility(
-                        $reflectionClass->getName(),
-                        $reflectionMethod->getName(),
-                        Visibility::PROTECTED
-                    ))
-                    ->all()
-            )
-            ->flatten()
-            // ->dd()
-            ->all(),
-    )
-    ->withConfiguredRule(RenameFunctionRector::class, [
-        'Pest\Faker\fake' => 'fake',
-        'Pest\Faker\faker' => 'fake',
-        'test' => 'it',
-    ])
     ->withSkip([
         DowngradeArrayIsListRector::class,
         DowngradeStrContainsRector::class,
@@ -188,6 +150,8 @@ return RectorConfig::configure()
         DowngradeStrStartsWithRector::class,
     ])
     ->withSkip([
+        ScalarValueToConstFetchRector::class,
+
         ChangeOrIfContinueToMultiContinueRector::class,
         EncapsedStringsToSprintfRector::class,
         ExplicitBoolCompareRector::class,
