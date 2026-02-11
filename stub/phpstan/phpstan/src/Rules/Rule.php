@@ -38,9 +38,9 @@ if (interface_exists('PHPStan\Rules\Rule')) {
  *
  * Learn more: https://phpstan.org/developing-extensions/rules
  *
- * @api
- *
  * @template TNodeType of Node
+ *
+ * @api
  */
 interface Rule
 {

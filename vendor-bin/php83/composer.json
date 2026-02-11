@@ -1,8 +1,8 @@
 {
     "require-dev": {
-        "php": ">=7.4",
+        "php": ">=8.3",
         "ergebnis/composer-normalize": "^2.50",
-        "symplify/rule-doc-generator": "^12.2"
+        "rector/mockstan": "dev-main"
     },
     "config": {
         "allow-plugins": {
