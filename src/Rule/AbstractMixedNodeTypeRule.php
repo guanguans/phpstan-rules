@@ -22,6 +22,8 @@ use function Guanguans\PHPStanRules\Support\is_instance_of_any;
  * @template TNodeType of Node
  *
  * @extends AbstractRule<Node>
+ *
+ * @api
  */
 abstract class AbstractMixedNodeTypeRule extends AbstractRule
 {

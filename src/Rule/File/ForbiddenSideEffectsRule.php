@@ -29,6 +29,8 @@ use staabm\SideEffectsDetector\SideEffectsDetector;
  * @see \Rector\DeadCode\SideEffect\
  *
  * @extends AbstractRule<FileNode>
+ *
+ * @api
  */
 final class ForbiddenSideEffectsRule extends AbstractRule
 {
