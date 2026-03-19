@@ -8,6 +8,19 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.1.0"></a>
+## [1.1.0] - 2026-03-19
+### 🐞 Bug Fixes
+- **composer.json:** Update dependencies to latest versions ([5583df4](https://github.com/guanguans/phpstan-rules/commit/5583df4))
+
+### 📦 Builds
+- **dependencies:** Update illuminate/support and dev dependencies ([1e5128f](https://github.com/guanguans/phpstan-rules/commit/1e5128f))
+- **deps-dev:** update shipmonk/dead-code-detector requirement || ^0.15 ([c14fbea](https://github.com/guanguans/phpstan-rules/commit/c14fbea))
+
+### Pull Requests
+- Merge pull request [#2](https://github.com/guanguans/phpstan-rules/issues/2) from guanguans/dependabot/composer/shipmonk/dead-code-detector-tw-0.14or-tw-0.15
+
+
 <a name="1.0.3"></a>
 ## [1.0.3] - 2026-02-05
 ### 🐞 Bug Fixes
@@ -57,7 +70,8 @@ All notable changes to this project will be documented in this file.
 - **dependencies:** Add new PHPStan rules and no-floaters package ([c702a5b](https://github.com/guanguans/phpstan-rules/commit/c702a5b))
 
 
-[Unreleased]: https://github.com/guanguans/phpstan-rules/compare/1.0.3...HEAD
+[Unreleased]: https://github.com/guanguans/phpstan-rules/compare/1.1.0...HEAD
+[1.1.0]: https://github.com/guanguans/phpstan-rules/compare/1.0.3...1.1.0
 [1.0.3]: https://github.com/guanguans/phpstan-rules/compare/1.0.2...1.0.3
 [1.0.2]: https://github.com/guanguans/phpstan-rules/compare/1.0.1...1.0.2
 [1.0.1]: https://github.com/guanguans/phpstan-rules/compare/1.0.0...1.0.1
