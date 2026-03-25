@@ -8,6 +8,16 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.1.1"></a>
+## [1.1.1] - 2026-03-25
+### 📦 Builds
+- **dependencies:** Add new Pest and Rector plugins ([be73d14](https://github.com/guanguans/phpstan-rules/commit/be73d14))
+
+### 🤖 Continuous Integrations
+- **config:** Update github config files ([fd18c2d](https://github.com/guanguans/phpstan-rules/commit/fd18c2d))
+- **config:** Update config files ([ee3b00e](https://github.com/guanguans/phpstan-rules/commit/ee3b00e))
+
+
 <a name="1.1.0"></a>
 ## [1.1.0] - 2026-03-19
 ### 🐞 Bug Fixes
@@ -70,7 +80,8 @@ All notable changes to this project will be documented in this file.
 - **dependencies:** Add new PHPStan rules and no-floaters package ([c702a5b](https://github.com/guanguans/phpstan-rules/commit/c702a5b))
 
 
-[Unreleased]: https://github.com/guanguans/phpstan-rules/compare/1.1.0...HEAD
+[Unreleased]: https://github.com/guanguans/phpstan-rules/compare/1.1.1...HEAD
+[1.1.1]: https://github.com/guanguans/phpstan-rules/compare/1.1.0...1.1.1
 [1.1.0]: https://github.com/guanguans/phpstan-rules/compare/1.0.3...1.1.0
 [1.0.3]: https://github.com/guanguans/phpstan-rules/compare/1.0.2...1.0.3
 [1.0.2]: https://github.com/guanguans/phpstan-rules/compare/1.0.1...1.0.2
