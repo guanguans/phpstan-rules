@@ -1,6 +1,8 @@
 <?php
 
 /** @noinspection PhpDeprecationInspection */
+/** @noinspection PhpUndefinedClassInspection */
+/** @noinspection PhpUndefinedNamespaceInspection */
 /** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 

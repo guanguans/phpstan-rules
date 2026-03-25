@@ -1,8 +1,10 @@
 <?php
 
 /** @noinspection EfferentObjectCouplingInspection */
+/** @noinspection PhpInternalEntityUsedInspection */
+/** @noinspection PhpUndefinedClassInspection */
+/** @noinspection PhpUndefinedNamespaceInspection */
 /** @noinspection PhpUnused */
-
 declare(strict_types=1);
 
 /**
@@ -46,7 +48,9 @@ final class ComposerScripts
     private function __construct() {}
 
     /**
-     * @throws \ErrorException*@see vendor/phpstan/phpstan/phpstan.phar/preload.php
+     * @see vendor/phpstan/phpstan/phpstan.phar/preload.php
+     *
+     * @throws \ErrorException
      * @throws \ReflectionException
      *
      * @return int<0>|never-returns<1>
