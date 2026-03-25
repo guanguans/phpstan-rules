@@ -116,7 +116,7 @@ abstract class AbstractRuleTestCase extends RuleTestCase
 
         return array_reduce(
             static::ruleReflectionClass()->getConstructor()->getParameters(),
-            function (array $parameters, \ReflectionParameter $reflectionParameter) use ($rawParameters): array {
+            static function (array $parameters, \ReflectionParameter $reflectionParameter) use ($rawParameters): array {
                 $parameterName = $reflectionParameter->getName();
 
                 if (class_exists($typeName = $reflectionParameter->getType()->getName())) {

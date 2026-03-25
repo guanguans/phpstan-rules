@@ -1,7 +1,6 @@
-# total 9 errors
+# total 6 errors
 
 includes:
     - phpstanApi.runtimeReflection.neon
-    - rector.noInstanceOfStaticReflection.neon
     - symplify.forbiddenFuncCall.neon
     - symplify.forbiddenStaticClassConstFetch.neon
