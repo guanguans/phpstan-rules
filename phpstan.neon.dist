@@ -27,6 +27,7 @@ includes:
     - vendor/symplify/phpstan-rules/config/phpunit-rules.neon
 #    - vendor/symplify/phpstan-rules/config/rector-rules.neon
 #    - vendor/symplify/phpstan-rules/config/symfony-rules.neon
+#    - vendor/symplify/phpstan-rules/config/symfony-config-rules.neon
 
 services:
 #    # https://github.com/guanguans/notify/security/code-scanning
