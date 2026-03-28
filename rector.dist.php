@@ -152,8 +152,12 @@ return RectorConfig::configure()
         WrapEncapsedVariableInCurlyBracesRector::class,
     ])
     ->withSkip([
+        JsonThrowOnErrorRector::class => [
+            __DIR__.'/tests/Pest.php',
+        ],
         RenameParamToMatchTypeRector::class => [
             __DIR__.'/src/Rule/*Rule.php',
+            __DIR__.'/tests/Pest.php',
         ],
         ScalarValueToConstFetchRector::class => [
             __DIR__.'/tests/Rule/AbstractRuleTestCase.php',
