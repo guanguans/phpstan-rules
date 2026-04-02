@@ -30,6 +30,8 @@ use Symfony\Component\Finder\SplFileInfo;
 use function Guanguans\RectorRules\Support\classes;
 
 /**
+ * @see https://github.com/laravel/framework/blob/12.x/src/Illuminate/Foundation/ComposerScripts.php
+ *
  * @internal
  *
  * @property \Symfony\Component\Console\Output\ConsoleOutput $output
