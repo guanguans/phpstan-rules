@@ -43,9 +43,9 @@ You can also refer to the configuration file [`tests/Rule/.../.../config/configu
 ## Composer scripts
 
 ```shell
+composer app:fix-neon
 composer checks:required
 composer php-cs-fixer:fix
-composer phpstan-rules:fix-neon-files
 composer test
 ```
 

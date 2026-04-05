@@ -2,7 +2,7 @@
     "name": "guanguans/phpstan-rules",
     "description": "A set of additional rules for phpstan/phpstan. - 一套针对 `phpstan/phpstan` 的附加规则。",
     "license": "MIT",
-    "type": "library",
+    "type": "phpstan-extension",
     "keywords": [
         "dev",
         "testing",
@@ -156,6 +156,10 @@
             "@composer:normalize"
         ],
         "actionlint": "actionlint -ignore=SC2035 -ignore=SC2086 -color -oneline -verbose",
+        "app:fix-neon": "Guanguans\\PHPStanRules\\Support\\ComposerScripts::fixNeon",
+        "app:lint-readme": "App\\Support\\ComposerScripts::lintReadme",
+        "app:list-files": "Guanguans\\PHPStanRules\\Support\\ComposerScripts::listFiles",
+        "app:parse-phpdoc": "Guanguans\\RectorRules\\Support\\ComposerScripts::parsePhpdoc",
         "argtyper": "@php vendor/bin/argtyper --ansi -vv",
         "argtyper:add-types": "@argtyper add-types .",
         "blade-formatter": "blade-formatter resources/views/*.blade.php resources/views/**/*.blade.php --ignore-path= --php-version=7.4 --progress",
@@ -172,6 +176,7 @@
         ],
         "checks:optional": [
             "@putenv:xdebug-off",
+            "@app:fix-neon",
             "@composer:unlink",
             "@class-leak:check",
             "@composer-dependency-analyser",
@@ -203,7 +208,6 @@
         "checks:required": [
             "@putenv:xdebug-off",
             "@php-cs-fixer:fix-dry-run",
-            "@phpstan-rules:fix-neon-files",
             "@pest"
         ],
         "class-leak": "@php vendor/bin/class-leak --ansi -vv",
@@ -280,7 +284,7 @@
         "mago:lint-semantics-only": "@mago lint --semantics-only",
         "monorepo-builder": [
             "@putenv:php",
-            "$PHP82 vendor/bin/monorepo-builder --ansi -vv"
+            "$PHP82 vendor/bin/monorepo-builder --config=vendor-bin/php82/vendor/guanguans/monorepo-builder-worker/monorepo-builder.php --ansi -vv"
         ],
         "monorepo-builder:release": [
             "@git-chglog",
@@ -354,9 +358,6 @@
         "phpbench": "@php vendor/bin/phpbench run --report=aggregate --ansi -vv",
         "phpmnd": "@php vendor/bin/phpmnd src/ --exclude-path=Support/helpers.phpp --ignore-numbers=2,-1 --hint --progress --ansi -vv",
         "phpstan": "@php vendor/bin/phpstan --ansi -vv",
-        "phpstan-rules:fix-neon-files": "Guanguans\\PHPStanRules\\Support\\ComposerScripts::fixNeonFiles",
-        "phpstan-rules:list-files": "Guanguans\\PHPStanRules\\Support\\ComposerScripts::listFiles",
-        "phpstan-rules:phpdoc-parse": "Guanguans\\RectorRules\\Support\\ComposerScripts::phpdocParse",
         "phpstan:analyse": "@phpstan analyse",
         "phpstan:analyse-error-format-annotate-pull-request": "@php vendor/bin/phpstan --ansi -vv 'analyse' --error-format=checkstyle | vendor/bin/cs2pr --notices-as-warnings --colorize",
         "phpstan:analyse-error-format-checkstyle": "@phpstan:analyse --error-format=checkstyle",

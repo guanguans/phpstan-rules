@@ -96,7 +96,7 @@ final class ComposerScripts
         return 0;
     }
 
-    public static function fixNeonFiles(Event $event): int
+    public static function fixNeon(Event $event): int
     {
         self::requireAutoload($event);
 
