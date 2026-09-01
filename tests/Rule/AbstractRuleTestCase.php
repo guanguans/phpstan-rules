@@ -75,7 +75,12 @@ abstract class AbstractRuleTestCase extends RuleTestCase
             static::class,
             (string) Str::of(static::ruleClass())
                 ->replace('PHPStanRules', 'PHPStanRulesTests')
-                ->append('\\', static::ruleReflectionClass()->getShortName(), 'Test')
+                ->append(
+                    '\\',
+                    static::ruleReflectionClass()
+                        ->getShortName(),
+                    'Test'
+                )
         );
     }
 
