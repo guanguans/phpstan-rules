@@ -8,6 +8,27 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.1.2"></a>
+## [1.1.2] - 2026-09-01
+### 📦 Builds
+- **dependencies:** Add composer as a dependency ([80b0914](https://github.com/guanguans/phpstan-rules/commit/80b0914))
+- **deps:** remove unused dependencies and add new phpstan options ([33abaa0](https://github.com/guanguans/phpstan-rules/commit/33abaa0))
+- **deps:** bump ergebnis/composer-normalize and other dependencies ([750cf55](https://github.com/guanguans/phpstan-rules/commit/750cf55))
+- **deps:** bump actions/stale from 10 to 11 ([0e853a7](https://github.com/guanguans/phpstan-rules/commit/0e853a7))
+- **deps:** bump actions/setup-node from 6 to 7 ([5ad8898](https://github.com/guanguans/phpstan-rules/commit/5ad8898))
+- **deps:** bump actions/cache from 5 to 6 ([6a54120](https://github.com/guanguans/phpstan-rules/commit/6a54120))
+- **deps:** bump actions/checkout from 6 to 7 ([fc1dd93](https://github.com/guanguans/phpstan-rules/commit/fc1dd93))
+- **deps:** bump codecov/codecov-action from 6 to 7 ([6f008f9](https://github.com/guanguans/phpstan-rules/commit/6f008f9))
+- **deps:** bump dependabot/fetch-metadata from 2 to 3 ([971a48d](https://github.com/guanguans/phpstan-rules/commit/971a48d))
+- **deps:** bump codecov/codecov-action from 5 to 6 ([bcba967](https://github.com/guanguans/phpstan-rules/commit/bcba967))
+- **deps-dev:** update rector/jack requirement from ^0.5 to ^1.0 ([0fe653e](https://github.com/guanguans/phpstan-rules/commit/0fe653e))
+
+### 🤖 Continuous Integrations
+- **config:** Update config files ([a7f3613](https://github.com/guanguans/phpstan-rules/commit/a7f3613))
+- **config:** Update config files ([b4ff980](https://github.com/guanguans/phpstan-rules/commit/b4ff980))
+- **config:** Update pest config files ([1e0b343](https://github.com/guanguans/phpstan-rules/commit/1e0b343))
+
+
 <a name="1.1.1"></a>
 ## [1.1.1] - 2026-03-25
 ### 📦 Builds
@@ -80,7 +101,8 @@ All notable changes to this project will be documented in this file.
 - **dependencies:** Add new PHPStan rules and no-floaters package ([c702a5b](https://github.com/guanguans/phpstan-rules/commit/c702a5b))
 
 
-[Unreleased]: https://github.com/guanguans/phpstan-rules/compare/1.1.1...HEAD
+[Unreleased]: https://github.com/guanguans/phpstan-rules/compare/1.1.2...HEAD
+[1.1.2]: https://github.com/guanguans/phpstan-rules/compare/1.1.1...1.1.2
 [1.1.1]: https://github.com/guanguans/phpstan-rules/compare/1.1.0...1.1.1
 [1.1.0]: https://github.com/guanguans/phpstan-rules/compare/1.0.3...1.1.0
 [1.0.3]: https://github.com/guanguans/phpstan-rules/compare/1.0.2...1.0.3
