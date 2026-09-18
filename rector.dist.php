@@ -1,9 +1,6 @@
 <?php
 
 /** @noinspection PhpInternalEntityUsedInspection */
-/** @noinspection PhpMultipleClassDeclarationsInspection */
-/** @noinspection PhpUnhandledExceptionInspection */
-/** @noinspection PhpUnusedAliasInspection */
 declare(strict_types=1);
 
 /**
@@ -16,12 +13,11 @@ declare(strict_types=1);
  */
 
 use Ergebnis\Rector\Rules\Expressions\Arrays\SortAssociativeArrayByKeyRector;
-use Ergebnis\Rector\Rules\Faker\GeneratorPropertyFetchToMethodCallRector;
-use Ergebnis\Rector\Rules\Files\ReferenceNamespacedSymbolsRelativeToNamespacePrefixRector;
 use Guanguans\RectorRules\Rector\File\AddNoinspectionDocblockToFileFirstStmtRector;
 use Guanguans\RectorRules\Rector\Name\RenameToConventionalCaseNameRector;
 use PhpParser\NodeVisitor\ParentConnectingVisitor;
 use Rector\CodeQuality\Rector\LogicalAnd\LogicalToBooleanRector;
+use Rector\CodingStyle\Rector\Assign\SplitDoubleAssignRector;
 use Rector\CodingStyle\Rector\ClassLike\NewlineBetweenClassLikeStmtsRector;
 use Rector\Config\RectorConfig;
 use Rector\DowngradePhp80\Rector\FuncCall\DowngradeStrContainsRector;
@@ -34,6 +30,8 @@ use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Set\ValueObject\DowngradeLevelSetList;
 use Rector\Set\ValueObject\SetList;
 use Rector\ValueObject\PhpVersion;
+
+error_reporting(\E_ALL & ~\E_DEPRECATED & ~\E_USER_DEPRECATED);
 
 return RectorConfig::configure()
     ->withPaths([
@@ -49,7 +47,7 @@ return RectorConfig::configure()
     ->withParallel()
     // ->withImportNames(importDocBlockNames: false, importShortClasses: false, removeUnusedImports: false)
     ->withImportNames(true, false, false, false)
-    // ->withEditorUrl()
+    ->reportUnusedSkips()
     ->withFluentCallNewLine()
     ->withTreatClassesAsFinal()
     ->withTypeGuardedClasses([])
@@ -57,7 +55,7 @@ return RectorConfig::configure()
     // ->withComposerBased(phpunit: true/* , laravel: true */)
     ->withComposerBased(false, false, true)
     ->withPhpVersion(PhpVersion::PHP_74)
-    ->withPhpLevel(74)
+    ->withPhpLevel(70400)
     // ->withDowngradeSets(php74: true)
     // ->withPhpSets(php74: true)
     // ->withPreparedSets(
@@ -94,10 +92,7 @@ return RectorConfig::configure()
         SetList::RECTOR_PRESET,
         SetList::PHP_POLYFILLS,
     ])
-    ->withRules([
-        GeneratorPropertyFetchToMethodCallRector::class,
-        SortAssociativeArrayByKeyRector::class,
-    ])
+    ->withRules([])
     ->withConfiguredRule(AddNoinspectionDocblockToFileFirstStmtRector::class, [
         '*/tests/*' => [
             'AnonymousFunctionStaticInspection',
@@ -111,11 +106,6 @@ return RectorConfig::configure()
     ])
     ->registerDecoratingNodeVisitor(ParentConnectingVisitor::class)
     ->withConfiguredRule(RenameToConventionalCaseNameRector::class, ['MIT'])
-    ->withConfiguredRule(ReferenceNamespacedSymbolsRelativeToNamespacePrefixRector::class, [
-        'namespacePrefixes' => [
-            // 'Guanguans\\PHPStanRules',
-        ],
-    ])
     ->withSkip([
         DowngradeArrayIsListRector::class,
         DowngradeStrContainsRector::class,
@@ -126,15 +116,16 @@ return RectorConfig::configure()
         LogicalToBooleanRector::class,
         NewlineBetweenClassLikeStmtsRector::class,
         PreferPHPUnitThisCallRector::class,
+        SplitDoubleAssignRector::class,
     ])
     ->withSkip([
         RenameParamToMatchTypeRector::class => [
             __DIR__.'/src/Rule/*Rule.php',
-            __DIR__.'/tests/Pest.php',
+            // __DIR__.'/tests/Pest.php',
         ],
         SortAssociativeArrayByKeyRector::class => [
             __DIR__.'/config/',
-            __DIR__.'/src/',
-            __DIR__.'/tests/',
+            // __DIR__.'/src/',
+            // __DIR__.'/tests/',
         ],
     ]);
