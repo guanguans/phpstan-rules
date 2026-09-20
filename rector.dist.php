@@ -13,6 +13,7 @@ declare(strict_types=1);
  */
 
 use Ergebnis\Rector\Rules\Expressions\Arrays\SortAssociativeArrayByKeyRector;
+use Guanguans\PhpCsFixerCustomFixers\Support\Utils;
 use Guanguans\RectorRules\Rector\File\AddNoinspectionDocblockToFileFirstStmtRector;
 use Guanguans\RectorRules\Rector\Name\RenameToConventionalCaseNameRector;
 use PhpParser\NodeVisitor\ParentConnectingVisitor;
@@ -20,6 +21,7 @@ use Rector\CodeQuality\Rector\LogicalAnd\LogicalToBooleanRector;
 use Rector\CodingStyle\Rector\Assign\SplitDoubleAssignRector;
 use Rector\CodingStyle\Rector\ClassLike\NewlineBetweenClassLikeStmtsRector;
 use Rector\Config\RectorConfig;
+use Rector\DowngradePhp74\Rector\Array_\DowngradeArraySpreadRector;
 use Rector\DowngradePhp80\Rector\FuncCall\DowngradeStrContainsRector;
 use Rector\DowngradePhp80\Rector\FuncCall\DowngradeStrEndsWithRector;
 use Rector\DowngradePhp80\Rector\FuncCall\DowngradeStrStartsWithRector;
@@ -38,10 +40,32 @@ return RectorConfig::configure()
         __DIR__.'/config/',
         __DIR__.'/src/',
         __DIR__.'/tests/',
-        __DIR__.'/composer-bump',
+        ...Utils::defaultRootFiles(),
     ])
     ->withRootFiles()
-    ->withSkip(['*/Fixtures/*', __DIR__.'/tests.php'])
+    ->withSkip(['*/Fixtures/*'])
+    ->withSkip([
+        DowngradeArrayIsListRector::class,
+        DowngradeArraySpreadRector::class,
+        DowngradeStrContainsRector::class,
+        DowngradeStrEndsWithRector::class,
+        DowngradeStrStartsWithRector::class,
+    ])
+    ->withSkip([
+        LogicalToBooleanRector::class,
+        NewlineBetweenClassLikeStmtsRector::class,
+        PreferPHPUnitThisCallRector::class,
+        SplitDoubleAssignRector::class,
+    ])
+    ->withSkip([
+        RenameParamToMatchTypeRector::class => [
+            __DIR__.'/src/Rule/*Rule.php',
+        ],
+        SortAssociativeArrayByKeyRector::class => [
+            /** @see vendor/rector/rector/src/PostRector/Rector/ */
+            __DIR__.'/config/',
+        ],
+    ])
     ->withCache(__DIR__.'/.build/rector/')
     // ->withoutParallel()
     ->withParallel()
@@ -105,27 +129,4 @@ return RectorConfig::configure()
         ],
     ])
     ->registerDecoratingNodeVisitor(ParentConnectingVisitor::class)
-    ->withConfiguredRule(RenameToConventionalCaseNameRector::class, ['MIT'])
-    ->withSkip([
-        DowngradeArrayIsListRector::class,
-        DowngradeStrContainsRector::class,
-        DowngradeStrEndsWithRector::class,
-        DowngradeStrStartsWithRector::class,
-    ])
-    ->withSkip([
-        LogicalToBooleanRector::class,
-        NewlineBetweenClassLikeStmtsRector::class,
-        PreferPHPUnitThisCallRector::class,
-        SplitDoubleAssignRector::class,
-    ])
-    ->withSkip([
-        RenameParamToMatchTypeRector::class => [
-            __DIR__.'/src/Rule/*Rule.php',
-            // __DIR__.'/tests/Pest.php',
-        ],
-        SortAssociativeArrayByKeyRector::class => [
-            __DIR__.'/config/',
-            // __DIR__.'/src/',
-            // __DIR__.'/tests/',
-        ],
-    ]);
+    ->withConfiguredRule(RenameToConventionalCaseNameRector::class, ['MIT']);
